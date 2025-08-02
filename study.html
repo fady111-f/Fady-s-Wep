@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" class="light-mode">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Me</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="light-mode">
+
+  <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>My Study</h1>
+      <button id="darkModeToggle" class="btn btn-outline-secondary">🌙 Dark Mode</button>
+    </div>
+
+    <div class="card p-4">
+      <p>Fady excelled academically, earning 97.2% in Egypt’s National High School Diploma while studying at El-Saidiya Secondary School, one of the country’s most prestigious public schools. He ranked 200th nationwide and was admitted to Cairo University. There, he joined the Faculty of Engineering and quickly distinguished himself, earning a GPA that placed him among the top three students in his class. This outstanding performance has enabled him to transfer to the Faculty of Computer and Information Sciences, aligning his academic path with his passion for technology and innovation.</p>
+
+    </div>
+
+    <a href="index.html" class="btn btn-link mt-4">⬅ Back to Home</a>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+  <script>
+    const toggleBtn = document.getElementById("darkModeToggle");
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      document.body.classList.toggle("light-mode");
+    });
+  </script>
+</body>
+</html>
