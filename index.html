@@ -1,55 +1,566 @@
 <!DOCTYPE html>
-<html lang="en" class="light-mode">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Home</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fady Fawzy — Computer Engineering Student & Developer</title>
+  <meta name="description" content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI. GPA 3.94, ranked 3rd." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="app.css" />
 </head>
-<body class="light-mode">
+<body>
 
-  <div class="main-container">
-    <div class="title-bar">
-      <h1>Welcome to My HomePage</h1>
-      <button id="darkModeToggle" class="btn btn-outline-secondary">🌙 Dark Mode</button>
-    </div>
-
-    <div class="card-deck-custom mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">👤 About Me</h5>
-          <p class="card-text">Learn more about who I am and my journey.</p>
-          <a href="about.html" class="btn btn-primary">Explore</a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">🎓 My Study</h5>
-          <p class="card-text">Discover my academic background and interests.</p>
-          <a href="study.html" class="btn btn-primary">Explore</a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">📚 My Experience</h5>
-          <p class="card-text">Explore my background about work and what i made.</p>
-          <a href="courses.html" class="btn btn-primary">Explore</a>
-        </div>
-      </div>
-    </div>
-
-    <a href="contact.html" class="btn btn-success">📬 Contact Me</a>
+  <!-- Animated background -->
+  <div class="bg-glow">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const toggleBtn = document.getElementById("darkModeToggle");
-    toggleBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-      document.body.classList.toggle("light-mode");
-    });
-  </script>
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#hero" class="nav-logo">FF.</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#education" class="nav-link">Education</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="btn-primary-custom" style="padding: 10px 22px; font-size: 0.82rem;"><span>Contact</span></a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <p class="hero-greeting"><span class="wave">👋</span> Hello, I'm</p>
+          <h1 class="hero-name">Fady Fawzy</h1>
+          <p class="hero-title">Computer Engineering Student</p>
+          <p class="hero-description">
+            Computer Engineering student at Cairo University with strong interests in computer networks, embedded systems, web development, and artificial intelligence. Passionate about hands-on engineering projects, low-level programming, and solving real-world technical problems.
+          </p>
+          <div class="hero-stats">
+            <div class="stat-item reveal reveal-delay-1">
+              <div class="stat-number" data-count="3.94">0</div>
+              <div class="stat-label">GPA</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-2">
+              <div class="stat-number">3rd</div>
+              <div class="stat-label">Rank</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-3">
+              <div class="stat-number" data-count="6">0</div>
+              <div class="stat-label">Projects</div>
+            </div>
+          </div>
+          <div class="hero-cta">
+            <a href="#projects" class="btn-primary-custom"><span>View Projects</span> <span>→</span></a>
+            <a href="Fady_Fawzy_CV.txt" target="_blank" class="btn-outline-custom" download>Download CV</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-avatar-wrapper">
+            <div class="hero-avatar-ring"></div>
+            <div class="hero-avatar">FF</div>
+            <div class="hero-floating-badge badge-gpa">
+              <span class="badge-icon">🎯</span>
+              <div>
+                <span class="badge-value">3.94</span>
+                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">GPA</span>
+              </div>
+            </div>
+            <div class="hero-floating-badge badge-rank">
+              <span class="badge-icon">🏆</span>
+              <div>
+                <span class="badge-value">3rd</span>
+                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">Rank</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Scroll Indicator -->
+      <div class="scroll-indicator">
+        <div class="mouse"></div>
+        <p>Scroll Down</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">About Me</p>
+        <h2 class="section-title">A Passionate <span class="gradient-text">Engineer</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            I'm Fady Fawzy Youssef, a young man from Giza, Egypt, passionate about programming and technology. I enjoy learning step by step with deep understanding rather than memorization.
+          </p>
+          <p>
+            I began my journey with CS50 and tackle challenges with an analytical and patient mindset. Ranked third in the preparatory engineering year, I'm driven by hands-on engineering projects, low-level programming, and solving real-world technical problems through practical experience and teamwork.
+          </p>
+          <p>
+            Beyond tech, I love traveling and trying new food — especially grilled chicken made by my mother.
+          </p>
+        </div>
+        <div class="about-info-cards">
+          <div class="info-card reveal reveal-delay-1">
+            <div class="info-icon">🎓</div>
+            <div class="info-content">
+              <div class="info-label">University</div>
+              <div class="info-value">Cairo University — Faculty of Engineering</div>
+            </div>
+          </div>
+          <div class="info-card reveal reveal-delay-2">
+            <div class="info-icon">💻</div>
+            <div class="info-content">
+              <div class="info-label">Department</div>
+              <div class="info-value">Computer Engineering</div>
+            </div>
+          </div>
+          <div class="info-card reveal reveal-delay-3">
+            <div class="info-icon">📍</div>
+            <div class="info-content">
+              <div class="info-label">Location</div>
+              <div class="info-value">Giza, Egypt</div>
+            </div>
+          </div>
+          <div class="info-card reveal reveal-delay-4">
+            <div class="info-icon">🌟</div>
+            <div class="info-content">
+              <div class="info-label">Interests</div>
+              <div class="info-value">Networks, Embedded Systems, AI, Web Dev</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EDUCATION ===== -->
+  <section id="education">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Education</p>
+        <h2 class="section-title">Academic <span class="gradient-text">Journey</span></h2>
+      </div>
+      <div class="education-card reveal">
+        <div class="education-icon-wrap">🏛️</div>
+        <div class="education-info">
+          <h3>Cairo University, Faculty of Engineering</h3>
+          <p class="edu-dept">Computer Engineering</p>
+          <div class="edu-meta">
+            <span>📅 2025 – 2029</span>
+            <span>📍 Giza, Egypt</span>
+          </div>
+          <div class="edu-badge">⭐ Ranked 3rd — GPA 3.94</div>
+          <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-secondary);">
+            Excelled academically, earning 97.2% in Egypt's National High School Diploma. Ranked 200th nationwide and admitted to Cairo University. Placed among the top three students, enabling transfer to the Computer Engineering department.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Skills</p>
+        <h2 class="section-title">Technical <span class="gradient-text">Arsenal</span></h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-category reveal reveal-delay-1">
+          <div class="skill-category-icon">⚡</div>
+          <h3 class="skill-category-title">Programming Languages</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">C</span>
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">HTML</span>
+            <span class="skill-tag">CSS</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">Verilog</span>
+            <span class="skill-tag">ARM Assembly</span>
+          </div>
+        </div>
+        <div class="skill-category reveal reveal-delay-2">
+          <div class="skill-category-icon">🛠️</div>
+          <h3 class="skill-category-title">Tools & Platforms</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">VS Code</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Keil µVision</span>
+            <span class="skill-tag">ModelSim</span>
+            <span class="skill-tag">AutoCAD</span>
+            <span class="skill-tag">Power BI</span>
+          </div>
+        </div>
+        <div class="skill-category reveal reveal-delay-3">
+          <div class="skill-category-icon">🤝</div>
+          <h3 class="skill-category-title">Soft Skills & Languages</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Leadership</span>
+            <span class="skill-tag">Adaptability</span>
+            <span class="skill-tag">Teamwork</span>
+            <span class="skill-tag">Communication</span>
+            <span class="skill-tag">Problem Solving</span>
+            <span class="skill-tag">Arabic (Native)</span>
+            <span class="skill-tag">English (Very Good)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE ===== -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Experience</p>
+        <h2 class="section-title">Professional <span class="gradient-text">Path</span></h2>
+      </div>
+      <div class="timeline">
+
+        <!-- Power BI Trainee -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Power BI Trainee</h3>
+                <p class="timeline-company">Digital Egypt Pioneers Initiative</p>
+              </div>
+              <div class="timeline-meta">
+                <span class="timeline-date">📅 2025 – Present</span>
+              </div>
+            </div>
+            <ul class="timeline-details">
+              <li>Learning data analysis and visualization using Power BI</li>
+              <li>Working with dashboards, reports, and data-driven insights</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- HR Member -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">HR Member</h3>
+                <p class="timeline-company">IEEE CUSB</p>
+              </div>
+              <div class="timeline-meta">
+                <span class="timeline-date">📅 2025 – Present</span>
+                <span class="timeline-location">📍 Giza, Egypt</span>
+              </div>
+            </div>
+            <ul class="timeline-details">
+              <li>Assisted in organizing team activities and supporting member coordination</li>
+              <li>Participated in HR operations, communication, and event preparation</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Research Participant -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Research Participant</h3>
+                <p class="timeline-company">TCCD Research Day — 15th Edition</p>
+              </div>
+              <div class="timeline-meta">
+                <span class="timeline-date">📅 2026</span>
+                <span class="timeline-location">📍 Egypt</span>
+              </div>
+            </div>
+            <ul class="timeline-details">
+              <li>Achieved 4th place in the Computer Department</li>
+              <li>Presented research on Adaptive Low-Rank Memory Compression Framework for Operating Systems</li>
+              <li>Focused on improving memory efficiency through adaptive low-rank compression techniques</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Electrical Intern -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Electrical & Technical Intern</h3>
+                <p class="timeline-company">EVA Pharma</p>
+              </div>
+              <div class="timeline-meta">
+                <span class="timeline-date">📅 Jun 2025 – Oct 2025</span>
+                <span class="timeline-location">📍 Giza, Egypt</span>
+              </div>
+            </div>
+            <ul class="timeline-details">
+              <li>Assisted engineers and technicians in electrical systems and industrial operations</li>
+              <li>Worked with backup generators, server/data panels, and electrical management tasks</li>
+              <li>Supported AutoCAD work, technical documentation, and professional email communication</li>
+              <li>Applied engineering knowledge in a real industrial environment and handled increasing responsibilities</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Production Line -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Production Line Operator</h3>
+                <p class="timeline-company">EVA Pharma</p>
+              </div>
+              <div class="timeline-meta">
+                <span class="timeline-date">📅 Summer Training</span>
+                <span class="timeline-location">📍 Giza, Egypt</span>
+              </div>
+            </div>
+            <ul class="timeline-details">
+              <li>Operated industrial machines independently during summer training</li>
+              <li>Gained practical experience with production systems and teamwork in industrial environments</li>
+              <li>Improved communication and problem-solving skills through collaboration with technicians and supervisors</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Projects</p>
+        <h2 class="section-title">Featured <span class="gradient-text">Work</span></h2>
+      </div>
+      <div class="projects-grid">
+
+        <!-- Smart Nurse Robot -->
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-header">
+            <span class="project-icon">🤖</span>
+            <span class="project-year">2026</span>
+          </div>
+          <h3 class="project-title">Smart Nurse Robot</h3>
+          <p class="project-desc">
+            Fully autonomous medical assistant robot using bare-metal ARM Thumb-2 Assembly on STM32 without HAL libraries. Integrated I2C, SPI, UART, ADC, PWM, Bluetooth, RFID, and ultrasonic navigation. Real-time monitoring of Heart Rate, SpO2, IV drop-rate, and pressure sensing with a custom TFT dashboard.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">ARM Assembly</span>
+            <span class="project-tag">STM32</span>
+            <span class="project-tag">I2C / SPI</span>
+            <span class="project-tag">Bluetooth</span>
+            <span class="project-tag">RFID</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/fady111-f" target="_blank">View Repository →</a>
+          </div>
+        </div>
+
+        <!-- Flowchart Designer -->
+        <div class="project-card reveal reveal-delay-2">
+          <div class="project-header">
+            <span class="project-icon">📐</span>
+            <span class="project-year">2025</span>
+          </div>
+          <h3 class="project-title">Flowchart Designer & Simulator</h3>
+          <p class="project-desc">
+            Complete flowchart designer and simulator in C++ without UI frameworks. Implemented copy/paste, undo/redo, validation, and automated C++ code generation features for visual algorithm design.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">C++</span>
+            <span class="project-tag">Graphics</span>
+            <span class="project-tag">Code Gen</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/fady111-f" target="_blank">View Repository →</a>
+          </div>
+        </div>
+
+        <!-- Restaurant Management -->
+        <div class="project-card reveal reveal-delay-3">
+          <div class="project-header">
+            <span class="project-icon">🍽️</span>
+            <span class="project-year">2026</span>
+          </div>
+          <h3 class="project-title">Restaurant Management System</h3>
+          <p class="project-desc">
+            Restaurant order management simulation system for dine-in, takeaway, and delivery orders. Features dynamic assignment algorithms for chefs, tables, and delivery scooters.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">C++</span>
+            <span class="project-tag">Algorithms</span>
+            <span class="project-tag">Simulation</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/fady111-f" target="_blank">View Repository →</a>
+          </div>
+        </div>
+
+        <!-- FPGA ALU -->
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-header">
+            <span class="project-icon">🔌</span>
+            <span class="project-year">2025</span>
+          </div>
+          <h3 class="project-title">FPGA ALU Logic Design</h3>
+          <p class="project-desc">
+            Designed and implemented an Arithmetic Logic Unit (ALU) using Verilog. Supported arithmetic operations, BCD-to-excess-3 conversion, and FPGA-based sequential logic. Simulated and verified on a DE1-SoC FPGA board using ModelSim.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Verilog</span>
+            <span class="project-tag">FPGA</span>
+            <span class="project-tag">DE1-SoC</span>
+            <span class="project-tag">ModelSim</span>
+          </div>
+        </div>
+
+        <!-- Lampshade -->
+        <div class="project-card reveal reveal-delay-2">
+          <div class="project-header">
+            <span class="project-icon">💡</span>
+            <span class="project-year">2026</span>
+          </div>
+          <h3 class="project-title">Innovative Lampshade Project</h3>
+          <p class="project-desc">
+            Led a team in designing and building a recyclable PVC-based decorative lampshade. Applied sustainable design principles using reused materials. Received 3rd place and was selected as a showcase model by the department head.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Design</span>
+            <span class="project-tag">Sustainability</span>
+            <span class="project-tag">Leadership</span>
+          </div>
+        </div>
+
+        <!-- SDG 9 -->
+        <div class="project-card reveal reveal-delay-3">
+          <div class="project-header">
+            <span class="project-icon">🌍</span>
+            <span class="project-year">2025</span>
+          </div>
+          <h3 class="project-title">SDG 9 — Industry & Innovation</h3>
+          <p class="project-desc">
+            Led a team to research and present Sustainable Development Goal 9. Prepared presentation materials and coordinated public speaking tasks. Received excellent feedback for presentation quality and teamwork.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Research</span>
+            <span class="project-tag">Presentation</span>
+            <span class="project-tag">SDG</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">Let's <span class="gradient-text">Connect</span></h2>
+      </div>
+      <div class="contact-wrapper">
+        <div>
+          <p class="contact-info-text reveal">
+            I'm always open to new opportunities, collaborations, and interesting conversations. Whether you have a project in mind, a question, or just want to say hello — feel free to reach out!
+          </p>
+          <div class="contact-links">
+            <a href="mailto:fady.fawzy2006@gmail.com" class="contact-link reveal reveal-delay-1">
+              <div class="contact-link-icon">📧</div>
+              <div>
+                <div class="contact-link-label">Email</div>
+                <div class="contact-link-value">fady.fawzy2006@gmail.com</div>
+              </div>
+            </a>
+            <a href="tel:+201204788242" class="contact-link reveal reveal-delay-2">
+              <div class="contact-link-icon">📱</div>
+              <div>
+                <div class="contact-link-label">Phone</div>
+                <div class="contact-link-value">+20 120 478 8242</div>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/in/fady-fawzy1/" target="_blank" class="contact-link reveal reveal-delay-3">
+              <div class="contact-link-icon">💼</div>
+              <div>
+                <div class="contact-link-label">LinkedIn</div>
+                <div class="contact-link-value">fady-fawzy1</div>
+              </div>
+            </a>
+            <a href="https://github.com/fady111-f" target="_blank" class="contact-link reveal reveal-delay-4">
+              <div class="contact-link-icon">🐙</div>
+              <div>
+                <div class="contact-link-label">GitHub</div>
+                <div class="contact-link-value">fady111-f</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="contact-form reveal">
+          <h3>Send a Message</h3>
+          <form id="contactForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" placeholder="John Doe" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" placeholder="john@example.com" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Tell me about your project or idea..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary-custom" style="width: 100%; justify-content: center;">
+              <span>Send Message</span> <span>✉️</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>© 2026 Fady Fawzy. Built with passion & code.</p>
+        <div class="footer-links">
+          <a href="https://github.com/fady111-f" target="_blank">GitHub</a>
+          <a href="https://www.linkedin.com/in/fady-fawzy1/" target="_blank">LinkedIn</a>
+          <a href="mailto:fady.fawzy2006@gmail.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-outline" id="cursorOutline"></div>
+
+  <script src="app.js"></script>
 </body>
 </html>

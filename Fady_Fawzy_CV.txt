@@ -1,0 +1,77 @@
+Fady Fawzy
+Computer Engineering Student
+
+Contact:
+Email: fady.fawzy2006@gmail.com
+Phone: +20 1204788242
+LinkedIn: https://www.linkedin.com/in/fady-fawzy1/
+GitHub: https://github.com/fady111-f
+
+Summary:
+Computer Engineering student at Cairo University with strong interests in computer networks, embedded systems, web development, and artificial intelligence. Ranked third in the preparatory engineering year with a GPA of 3.94. Passionate about hands-on engineering projects, low-level programming, and solving real-world technical problems through practical experience and teamwork.
+
+Education:
+Cairo University, Faculty of Engineering
+Computer Engineering
+Giza, Egypt | 2025– 2029
+
+Experience & Achievements:
+- Power BI Trainee — Digital Egypt Pioneers Initiative (2025– Present)
+  Learning data analysis and visualization using Power BI.
+  Working with dashboards, reports, and data-driven insights.
+
+- HR Member — IEEE CUSB (2025– Present, Giza, Egypt)
+  Assisted in organizing team activities and supporting member coordination.
+  Participated in HR operations, communication, and event preparation.
+
+- Research Participant, TCCD Research Day 15th Edition (2026, Egypt)
+  Achieved 4th place in the Computer Department.
+  Presented research on Adaptive Low-Rank Memory Compression Framework for Operating Systems.
+  Focused on improving memory efficiency through adaptive low-rank compression techniques.
+
+- Production Line Operator — EVA Pharma (Summer Training, Giza, Egypt)
+  Operated industrial machines independently during summer training.
+  Gained practical experience with production systems and teamwork in industrial environments.
+  Improved communication and problem-solving skills through collaboration with technicians and supervisors.
+
+- Electrical & Technical Intern — EVA Pharma (Jun 2025– Oct 2025, Giza, Egypt)
+  Assisted engineers and technicians in electrical systems and industrial operations.
+  Worked with backup generators, server/data panels, and electrical management tasks.
+  Supported AutoCAD work, technical documentation, and professional email communication.
+  Applied engineering knowledge in a real industrial environment and handled increasing responsibilities.
+
+Projects:
+- Smart Nurse Robot (2026)
+  Developed a fully autonomous medical assistant robot using bare-metal ARM Thumb-2 Assembly on STM32 without HAL libraries.
+  Integrated multiple peripherals and protocols including I2C, SPI, UART, ADC, PWM, Bluetooth, RFID, and ultrasonic navigation.
+  Implemented real-time monitoring features such as Heart Rate, SpO2, IV drop-rate tracking, and pressure sensing.
+  Built a custom TFT dashboard with telemetry visualization and wireless monitoring support.
+
+- Flowchart Designer and Simulator (2025)
+  Developed a complete flowchart designer and simulator in C++ without UI frameworks.
+  Implemented copy/paste, undo/redo, validation, and automated C++ code generation features.
+
+- Restaurant Management System (2026)
+  Developed a restaurant order management simulation system for dine-in, takeaway, and delivery orders.
+  Implemented dynamic assignment algorithms for chefs, tables, and delivery scooters.
+
+- FPGA ALU Logic Design — Academic Project (2025)
+  Designed and implemented an Arithmetic Logic Unit (ALU) using Verilog.
+  Supported arithmetic operations, BCD-to-excess-3 conversion, and FPGA-based sequential logic.
+  Simulated and verified the design on a DE1-SoC FPGA board using ModelSim.
+
+- Innovative Lampshade Project (2026)
+  Led a team in designing and building a recyclable PVC-based decorative lampshade.
+  Applied sustainable design principles using reused materials.
+  Received 3rd place and was selected as a showcase model by the department head.
+
+- SDG 9 — Industry, Innovation, and Infrastructure (2025)
+  Led a team to research and present Sustainable Development Goal 9.
+  Prepared presentation materials and coordinated public speaking tasks.
+  Received excellent feedback for presentation quality and teamwork.
+
+Skills & Languages:
+- Programming Languages: C, C++, Python, JavaScript, HTML, CSS, SQL, Verilog, ARM Assembly
+- Tools & Platforms: VS Code, Git, GitHub, Keil uVision
+- Soft Skills: Leadership, Adaptability, Teamwork, Communication, Problem Solving
+- Languages: Arabic (Native), English (Very Good)
