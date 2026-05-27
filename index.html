@@ -7,15 +7,26 @@
   <meta name="description" content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI. GPA 3.94, ranked 3rd." />
   
   <!-- Open Graph / Social Meta Tags -->
-  <meta property="og:title" content="Fady Fawzy — Computer Engineering Student & Developer">
+  <meta property="og:title" content="Fady Fawzy — Computer Engineering Student &amp; Developer">
   <meta property="og:description" content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI.">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="logo.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
   
   <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
   <!-- Scroll Progress -->
   <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Particle canvas -->
+  <canvas id="particleCanvas"></canvas>
 
   <!-- Animated background -->
   <div class="bg-glow">
@@ -27,14 +38,16 @@
   <!-- ===== NAVIGATION ===== -->
   <nav class="navbar" id="navbar">
     <div class="container">
-      <a href="#hero" class="nav-logo">FF.</a>
+      <a href="#hero" class="nav-logo" aria-label="Fady Fawzy Home">
+        <img src="favicon.svg" alt="FF Logo" class="nav-logo-img"> FF.
+      </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#about" class="nav-link">About</a></li>
         <li><a href="#education" class="nav-link">Education</a></li>
         <li><a href="#skills" class="nav-link">Skills</a></li>
         <li><a href="#experience" class="nav-link">Experience</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">🌙</button></li>
+        <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">&#127769;</button></li>
         <li><a href="#contact" class="btn-primary-custom" style="padding: 10px 22px; font-size: 0.82rem;"><span>Contact</span></a></li>
       </ul>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
@@ -51,7 +64,8 @@
     <div class="container">
       <div class="hero-content">
         <div class="hero-text">
-          <p class="hero-greeting"><span class="wave">👋</span> Hello, I'm</p>
+          <div class="hero-status-badge"><span class="hero-status-dot"></span> Open to Opportunities &amp; Collaborations</div>
+          <p class="hero-greeting"><span class="wave">&#128075;</span> Hello, I'm</p>
           <h1 class="hero-name">Fady Fawzy</h1>
           <p class="hero-title">Computer Engineering Student</p>
           <p class="hero-description">
@@ -574,6 +588,9 @@
       </div>
     </div>
   </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8679;</button>
 
   <!-- Custom Cursor -->
   <div class="cursor-dot" id="cursorDot"></div>

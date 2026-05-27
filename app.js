@@ -62,7 +62,7 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, {
   threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
+  rootMargin: '0px 0px -40px 0px'
 });
 
 revealElements.forEach(el => revealObserver.observe(el));
@@ -80,8 +80,6 @@ function animateCounters() {
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-
-      // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = eased * target;
 
@@ -100,7 +98,6 @@ function animateCounters() {
   });
 }
 
-// Trigger counters when hero is visible
 const heroSection = document.getElementById('hero');
 const counterObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -119,10 +116,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     e.preventDefault();
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
 });
@@ -162,10 +156,10 @@ projectCards.forEach(card => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = (y - centerY) / 20;
-    const rotateY = (centerX - x) / 20;
+    const rotateX = (y - centerY) / 22;
+    const rotateY = (centerX - x) / 22;
 
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+    card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-7px)`;
   });
 
   card.addEventListener('mouseleave', () => {
@@ -182,7 +176,7 @@ magneticBtns.forEach(btn => {
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
 
-    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    btn.style.transform = `translate(${x * 0.14}px, ${y * 0.14}px)`;
   });
 
   btn.addEventListener('mouseleave', () => {
@@ -230,8 +224,7 @@ if (heroTitle) {
     setTimeout(typeEffect, typingSpeed);
   }
 
-  // Start typing after a short delay
-  setTimeout(typeEffect, 1500);
+  setTimeout(typeEffect, 1600);
 }
 
 // ===== PARALLAX ON HERO AVATAR =====
@@ -239,8 +232,8 @@ const heroVisual = document.querySelector('.hero-visual');
 
 if (heroVisual) {
   window.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 20;
-    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    const x = (e.clientX / window.innerWidth - 0.5) * 18;
+    const y = (e.clientY / window.innerHeight - 0.5) * 18;
     heroVisual.style.transform = `translate(${x}px, ${y}px)`;
   });
 }
@@ -248,7 +241,7 @@ if (heroVisual) {
 // ===== PAGE LOAD ANIMATION =====
 window.addEventListener('load', () => {
   document.body.style.opacity = '0';
-  document.body.style.transition = 'opacity 0.6s ease';
+  document.body.style.transition = 'opacity 0.5s ease';
   requestAnimationFrame(() => {
     document.body.style.opacity = '1';
   });
@@ -262,39 +255,37 @@ window.addEventListener('mousemove', (e) => {
   const posX = e.clientX;
   const posY = e.clientY;
 
-  if(cursorDot) {
+  if (cursorDot) {
     cursorDot.style.left = `${posX}px`;
     cursorDot.style.top = `${posY}px`;
   }
 
-  if(cursorOutline) {
-    // Smooth trailing effect
+  if (cursorOutline) {
     cursorOutline.animate({
       left: `${posX}px`,
       top: `${posY}px`
-    }, { duration: 500, fill: "forwards" });
+    }, { duration: 500, fill: 'forwards' });
   }
 });
 
-// Add hover class to interactive elements
 const interactables = document.querySelectorAll('a, button, input, textarea, .project-card, .skill-tag');
 
 interactables.forEach(el => {
   el.addEventListener('mouseenter', () => {
-    if(cursorOutline) {
-      cursorOutline.style.width = '60px';
-      cursorOutline.style.height = '60px';
-      cursorOutline.style.backgroundColor = 'rgba(99, 102, 241, 0.1)';
+    if (cursorOutline) {
+      cursorOutline.style.width = '58px';
+      cursorOutline.style.height = '58px';
+      cursorOutline.style.backgroundColor = 'rgba(108, 99, 255, 0.1)';
       cursorOutline.style.borderColor = 'transparent';
     }
   });
 
   el.addEventListener('mouseleave', () => {
-    if(cursorOutline) {
-      cursorOutline.style.width = '40px';
-      cursorOutline.style.height = '40px';
+    if (cursorOutline) {
+      cursorOutline.style.width = '38px';
+      cursorOutline.style.height = '38px';
       cursorOutline.style.backgroundColor = 'transparent';
-      cursorOutline.style.borderColor = 'rgba(99, 102, 241, 0.5)';
+      cursorOutline.style.borderColor = 'rgba(108, 99, 255, 0.5)';
     }
   });
 });
@@ -307,22 +298,22 @@ if (themeToggle) {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'light') {
     bodyElement.classList.add('light-theme');
-    themeToggle.textContent = '??';
+    themeToggle.innerHTML = '&#9728;'; // sun
   } else {
-    themeToggle.textContent = '??';
+    themeToggle.innerHTML = '&#127769;'; // moon
   }
 
   themeToggle.addEventListener('click', () => {
     bodyElement.classList.toggle('light-theme');
     const isLight = bodyElement.classList.contains('light-theme');
-    
+
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    themeToggle.textContent = isLight ? '??' : '??';
-    
+    themeToggle.innerHTML = isLight ? '&#9728;' : '&#127769;'; // sun or moon
+
     themeToggle.style.transform = 'rotate(360deg) scale(1.2)';
     setTimeout(() => {
       themeToggle.style.transform = '';
-    }, 300);
+    }, 350);
   });
 }
 
@@ -346,25 +337,147 @@ filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     filterBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    
+
     const filterValue = btn.getAttribute('data-filter');
-    
+
     projectCardsGrid.forEach(card => {
       const category = card.getAttribute('data-category');
-      
+
       if (filterValue === 'all' || filterValue === category) {
+        // 1. Remove display:none first so the card enters the layout
         card.classList.remove('hide');
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, 10);
+        // 2. Add hiding (opacity:0 scale:0.88) immediately so there's a start state
+        card.classList.add('hiding');
+        // 3. On next two frames, remove hiding to trigger the CSS transition in
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            card.classList.remove('hiding');
+          });
+        });
       } else {
-        card.style.opacity = '0';
-        card.style.transform = 'scale(0.9)';
+        // 1. Start fade-out animation
+        card.classList.add('hiding');
+        // 2. After transition ends, remove from layout
         setTimeout(() => {
           card.classList.add('hide');
-        }, 400);
+          card.classList.remove('hiding');
+        }, 320);
       }
     });
   });
 });
+
+// ===== BACK TO TOP =====
+const backToTop = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+  if (backToTop) {
+    if (window.scrollY > 500) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  }
+});
+
+if (backToTop) {
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// ===== PARTICLE CANVAS =====
+(function initParticles() {
+  const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let animFrame;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  resize();
+  window.addEventListener('resize', () => {
+    resize();
+    initParticleArray();
+  });
+
+  const isLight = document.body.classList.contains('light-theme');
+  const particleCount = Math.min(60, Math.floor(window.innerWidth / 22));
+
+  function createParticle() {
+    return {
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5 + 0.4,
+      dx: (Math.random() - 0.5) * 0.35,
+      dy: (Math.random() - 0.5) * 0.35,
+      opacity: Math.random() * 0.5 + 0.1
+    };
+  }
+
+  function initParticleArray() {
+    particles = Array.from({ length: particleCount }, createParticle);
+  }
+
+  initParticleArray();
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const isDark = !document.body.classList.contains('light-theme');
+
+    particles.forEach((p, i) => {
+      // Move
+      p.x += p.dx;
+      p.y += p.dy;
+
+      // Wrap
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+
+      // Draw particle
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = isDark
+        ? `rgba(108, 99, 255, ${p.opacity})`
+        : `rgba(79, 70, 229, ${p.opacity * 0.6})`;
+      ctx.fill();
+
+      // Draw connections
+      particles.slice(i + 1).forEach(p2 => {
+        const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+        if (dist < 130) {
+          const alpha = (1 - dist / 130) * 0.12 * p.opacity;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = isDark
+            ? `rgba(108, 99, 255, ${alpha})`
+            : `rgba(79, 70, 229, ${alpha * 0.5})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      });
+    });
+
+    animFrame = requestAnimationFrame(draw);
+  }
+
+  draw();
+
+  // Pause when tab is hidden for performance
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      cancelAnimationFrame(animFrame);
+    } else {
+      draw();
+    }
+  });
+})();
