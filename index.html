@@ -5,10 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fady Fawzy — Computer Engineering Student & Developer</title>
   <meta name="description" content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI. GPA 3.94, ranked 3rd." />
+  
+  <!-- Open Graph / Social Meta Tags -->
+  <meta property="og:title" content="Fady Fawzy — Computer Engineering Student & Developer">
+  <meta property="og:description" content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI.">
+  <meta property="og:type" content="website">
+  
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="app.css" />
 </head>
 <body>
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
 
   <!-- Animated background -->
   <div class="bg-glow">
@@ -27,6 +34,7 @@
         <li><a href="#skills" class="nav-link">Skills</a></li>
         <li><a href="#experience" class="nav-link">Experience</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">🌙</button></li>
         <li><a href="#contact" class="btn-primary-custom" style="padding: 10px 22px; font-size: 0.82rem;"><span>Contact</span></a></li>
       </ul>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
@@ -37,6 +45,7 @@
     </div>
   </nav>
 
+  <main>
   <!-- ===== HERO ===== -->
   <section id="hero">
     <div class="container">
@@ -64,13 +73,13 @@
           </div>
           <div class="hero-cta">
             <a href="#projects" class="btn-primary-custom"><span>View Projects</span> <span>→</span></a>
-            <a href="Fady_Fawzy_CV.txt" target="_blank" class="btn-outline-custom" download>Download CV</a>
+            <a href="Fady_Fawzy_CV_2026.pdf" target="_blank" class="btn-outline-custom" download>Download CV</a>
           </div>
         </div>
         <div class="hero-visual">
           <div class="hero-avatar-wrapper">
             <div class="hero-avatar-ring"></div>
-            <div class="hero-avatar">FF</div>
+            <div class="hero-avatar"><img src="avatar.jpg" alt="Fady Fawzy Avatar"></div>
             <div class="hero-floating-badge badge-gpa">
               <span class="badge-icon">🎯</span>
               <div>
@@ -356,10 +365,18 @@
         <p class="section-label">Projects</p>
         <h2 class="section-title">Featured <span class="gradient-text">Work</span></h2>
       </div>
+      
+      <div class="project-filters reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="embedded">Embedded/Hardware</button>
+        <button class="filter-btn" data-filter="software">Software/C++</button>
+        <button class="filter-btn" data-filter="design">Design/Research</button>
+      </div>
+
       <div class="projects-grid">
 
         <!-- Smart Nurse Robot -->
-        <div class="project-card reveal reveal-delay-1">
+        <div class="project-card reveal reveal-delay-1" data-category="embedded">
           <div class="project-header">
             <span class="project-icon">🤖</span>
             <span class="project-year">2026</span>
@@ -381,7 +398,7 @@
         </div>
 
         <!-- Flowchart Designer -->
-        <div class="project-card reveal reveal-delay-2">
+        <div class="project-card reveal reveal-delay-2" data-category="software">
           <div class="project-header">
             <span class="project-icon">📐</span>
             <span class="project-year">2025</span>
@@ -401,7 +418,7 @@
         </div>
 
         <!-- Restaurant Management -->
-        <div class="project-card reveal reveal-delay-3">
+        <div class="project-card reveal reveal-delay-3" data-category="software">
           <div class="project-header">
             <span class="project-icon">🍽️</span>
             <span class="project-year">2026</span>
@@ -421,7 +438,7 @@
         </div>
 
         <!-- FPGA ALU -->
-        <div class="project-card reveal reveal-delay-1">
+        <div class="project-card reveal reveal-delay-1" data-category="embedded">
           <div class="project-header">
             <span class="project-icon">🔌</span>
             <span class="project-year">2025</span>
@@ -439,7 +456,7 @@
         </div>
 
         <!-- Lampshade -->
-        <div class="project-card reveal reveal-delay-2">
+        <div class="project-card reveal reveal-delay-2" data-category="design">
           <div class="project-header">
             <span class="project-icon">💡</span>
             <span class="project-year">2026</span>
@@ -456,7 +473,7 @@
         </div>
 
         <!-- SDG 9 -->
-        <div class="project-card reveal reveal-delay-3">
+        <div class="project-card reveal reveal-delay-3" data-category="design">
           <div class="project-header">
             <span class="project-icon">🌍</span>
             <span class="project-year">2025</span>
@@ -507,7 +524,7 @@
               <div class="contact-link-icon">💼</div>
               <div>
                 <div class="contact-link-label">LinkedIn</div>
-                <div class="contact-link-value">fady-fawzy1</div>
+                <div class="contact-link-value">fady-fawzy</div>
               </div>
             </a>
             <a href="https://github.com/fady111-f" target="_blank" class="contact-link reveal reveal-delay-4">
@@ -521,18 +538,18 @@
         </div>
         <div class="contact-form reveal">
           <h3>Send a Message</h3>
-          <form id="contactForm" onsubmit="handleSubmit(event)">
+          <form id="contactForm" action="https://formspree.io/f/placeholder" method="POST" onsubmit="handleSubmit(event)">
             <div class="form-group">
               <label for="name">Your Name</label>
-              <input type="text" id="name" placeholder="John Doe" required />
+              <input type="text" id="name" name="name" placeholder="John Doe" required />
             </div>
             <div class="form-group">
               <label for="email">Your Email</label>
-              <input type="email" id="email" placeholder="john@example.com" required />
+              <input type="email" id="email" name="email" placeholder="john@example.com" required />
             </div>
             <div class="form-group">
               <label for="message">Message</label>
-              <textarea id="message" placeholder="Tell me about your project or idea..." required></textarea>
+              <textarea id="message" name="message" placeholder="Tell me about your project or idea..." required></textarea>
             </div>
             <button type="submit" class="btn-primary-custom" style="width: 100%; justify-content: center;">
               <span>Send Message</span> <span>✉️</span>
@@ -542,6 +559,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">

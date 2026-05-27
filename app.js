@@ -298,3 +298,73 @@ interactables.forEach(el => {
     }
   });
 });
+
+// ===== THEME TOGGLE =====
+const themeToggle = document.getElementById('themeToggle');
+const bodyElement = document.body;
+
+if (themeToggle) {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    bodyElement.classList.add('light-theme');
+    themeToggle.textContent = '??';
+  } else {
+    themeToggle.textContent = '??';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    bodyElement.classList.toggle('light-theme');
+    const isLight = bodyElement.classList.contains('light-theme');
+    
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    themeToggle.textContent = isLight ? '??' : '??';
+    
+    themeToggle.style.transform = 'rotate(360deg) scale(1.2)';
+    setTimeout(() => {
+      themeToggle.style.transform = '';
+    }, 300);
+  });
+}
+
+// ===== SCROLL PROGRESS BAR =====
+const scrollProgress = document.getElementById('scrollProgress');
+
+window.addEventListener('scroll', () => {
+  if (scrollProgress) {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    scrollProgress.style.width = scrolled + '%';
+  }
+});
+
+// ===== PROJECT FILTERING =====
+const filterBtns = document.querySelectorAll('.filter-btn');
+const projectCardsGrid = document.querySelectorAll('.project-card');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const filterValue = btn.getAttribute('data-filter');
+    
+    projectCardsGrid.forEach(card => {
+      const category = card.getAttribute('data-category');
+      
+      if (filterValue === 'all' || filterValue === category) {
+        card.classList.remove('hide');
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, 10);
+      } else {
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          card.classList.add('hide');
+        }, 400);
+      }
+    });
+  });
+});
