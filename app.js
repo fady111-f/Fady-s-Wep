@@ -1,43 +1,31 @@
-// ===== NAVBAR SCROLL EFFECT =====
+// ===== DOM ELEMENTS =====
 const navbar = document.getElementById('navbar');
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+const scrollProgress = document.getElementById('scrollProgress');
+const backToTop = document.getElementById('backToTop');
+const sections = document.querySelectorAll('section[id]');
+const navLinkElements = document.querySelectorAll('.nav-link');
+const cursorDot = document.getElementById('cursorDot');
+const cursorOutline = document.getElementById('cursorOutline');
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) {
+// ===== SINGLE CONSOLIDATED SCROLL HANDLER =====
+function onScroll() {
+  const scrollY = window.scrollY;
+
+  // Navbar scroll effect
+  if (scrollY > 50) {
     navbar.classList.add('scrolled');
   } else {
     navbar.classList.remove('scrolled');
   }
-});
 
-// ===== MOBILE NAVIGATION =====
-const navToggle = document.getElementById('navToggle');
-const navLinks = document.getElementById('navLinks');
-
-navToggle.addEventListener('click', () => {
-  navToggle.classList.toggle('active');
-  navLinks.classList.toggle('open');
-});
-
-// Close mobile menu on link click
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navToggle.classList.remove('active');
-    navLinks.classList.remove('open');
-  });
-});
-
-// ===== ACTIVE NAV LINK HIGHLIGHT =====
-const sections = document.querySelectorAll('section[id]');
-const navLinkElements = document.querySelectorAll('.nav-link');
-
-function updateActiveLink() {
-  const scrollPos = window.scrollY + 150;
-
+  // Active nav link highlight
+  const scrollPos = scrollY + 150;
   sections.forEach(section => {
     const top = section.offsetTop;
     const height = section.offsetHeight;
     const id = section.getAttribute('id');
-
     if (scrollPos >= top && scrollPos < top + height) {
       navLinkElements.forEach(link => {
         link.classList.remove('active');
@@ -47,9 +35,39 @@ function updateActiveLink() {
       });
     }
   });
+
+  // Scroll progress bar
+  if (scrollProgress) {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    scrollProgress.style.width = scrolled + '%';
+  }
+
+  // Back to top button
+  if (backToTop) {
+    if (scrollY > 500) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  }
 }
 
-window.addEventListener('scroll', updateActiveLink);
+window.addEventListener('scroll', onScroll, { passive: true });
+
+// ===== MOBILE NAVIGATION =====
+navToggle.addEventListener('click', () => {
+  navToggle.classList.toggle('active');
+  navLinks.classList.toggle('open');
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navToggle.classList.remove('active');
+    navLinks.classList.remove('open');
+  });
+});
 
 // ===== SCROLL REVEAL ANIMATIONS =====
 const revealElements = document.querySelectorAll('.reveal');
@@ -83,11 +101,7 @@ function animateCounters() {
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = eased * target;
 
-      if (isDecimal) {
-        counter.textContent = current.toFixed(2);
-      } else {
-        counter.textContent = Math.round(current);
-      }
+      counter.textContent = isDecimal ? current.toFixed(2) : Math.round(current);
 
       if (progress < 1) {
         requestAnimationFrame(update);
@@ -132,7 +146,7 @@ function handleSubmit(e) {
   btn.style.pointerEvents = 'none';
 
   setTimeout(() => {
-    btn.innerHTML = '<span>Message Sent! ✅</span>';
+    btn.innerHTML = '<span>Message Sent! \u2705</span>';
     btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
 
     e.target.reset();
@@ -227,30 +241,20 @@ if (heroTitle) {
   setTimeout(typeEffect, 1600);
 }
 
-// ===== PARALLAX ON HERO AVATAR =====
+// ===== PARALLAX ON HERO AVATAR (delayed to not conflict with entry animation) =====
 const heroVisual = document.querySelector('.hero-visual');
 
 if (heroVisual) {
-  window.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 18;
-    const y = (e.clientY / window.innerHeight - 0.5) * 18;
-    heroVisual.style.transform = `translate(${x}px, ${y}px)`;
-  });
+  setTimeout(() => {
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 18;
+      const y = (e.clientY / window.innerHeight - 0.5) * 18;
+      heroVisual.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  }, 1500);
 }
 
-// ===== PAGE LOAD ANIMATION =====
-window.addEventListener('load', () => {
-  document.body.style.opacity = '0';
-  document.body.style.transition = 'opacity 0.5s ease';
-  requestAnimationFrame(() => {
-    document.body.style.opacity = '1';
-  });
-});
-
 // ===== CUSTOM CURSOR =====
-const cursorDot = document.getElementById('cursorDot');
-const cursorOutline = document.getElementById('cursorOutline');
-
 window.addEventListener('mousemove', (e) => {
   const posX = e.clientX;
   const posY = e.clientY;
@@ -298,9 +302,9 @@ if (themeToggle) {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'light') {
     bodyElement.classList.add('light-theme');
-    themeToggle.innerHTML = '&#9728;'; // sun
+    themeToggle.textContent = '\u2600\uFE0F'; // ☀️
   } else {
-    themeToggle.innerHTML = '&#127769;'; // moon
+    themeToggle.textContent = '\uD83C\uDF19'; // 🌙
   }
 
   themeToggle.addEventListener('click', () => {
@@ -308,7 +312,7 @@ if (themeToggle) {
     const isLight = bodyElement.classList.contains('light-theme');
 
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    themeToggle.innerHTML = isLight ? '&#9728;' : '&#127769;'; // sun or moon
+    themeToggle.textContent = isLight ? '\u2600\uFE0F' : '\uD83C\uDF19';
 
     themeToggle.style.transform = 'rotate(360deg) scale(1.2)';
     setTimeout(() => {
@@ -316,18 +320,6 @@ if (themeToggle) {
     }, 350);
   });
 }
-
-// ===== SCROLL PROGRESS BAR =====
-const scrollProgress = document.getElementById('scrollProgress');
-
-window.addEventListener('scroll', () => {
-  if (scrollProgress) {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    scrollProgress.style.width = scrolled + '%';
-  }
-});
 
 // ===== PROJECT FILTERING =====
 const filterBtns = document.querySelectorAll('.filter-btn');
@@ -368,18 +360,6 @@ filterBtns.forEach(btn => {
 });
 
 // ===== BACK TO TOP =====
-const backToTop = document.getElementById('backToTop');
-
-window.addEventListener('scroll', () => {
-  if (backToTop) {
-    if (window.scrollY > 500) {
-      backToTop.classList.add('visible');
-    } else {
-      backToTop.classList.remove('visible');
-    }
-  }
-});
-
 if (backToTop) {
   backToTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -406,17 +386,16 @@ if (backToTop) {
     initParticleArray();
   });
 
-  const isLight = document.body.classList.contains('light-theme');
-  const particleCount = Math.min(60, Math.floor(window.innerWidth / 22));
+  const particleCount = Math.min(55, Math.floor(window.innerWidth / 24));
 
   function createParticle() {
     return {
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       r: Math.random() * 1.5 + 0.4,
-      dx: (Math.random() - 0.5) * 0.35,
-      dy: (Math.random() - 0.5) * 0.35,
-      opacity: Math.random() * 0.5 + 0.1
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      opacity: Math.random() * 0.45 + 0.1
     };
   }
 
@@ -447,24 +426,25 @@ if (backToTop) {
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = isDark
         ? `rgba(108, 99, 255, ${p.opacity})`
-        : `rgba(79, 70, 229, ${p.opacity * 0.6})`;
+        : `rgba(79, 70, 229, ${p.opacity * 0.5})`;
       ctx.fill();
 
       // Draw connections
-      particles.slice(i + 1).forEach(p2 => {
+      for (let j = i + 1; j < particles.length; j++) {
+        const p2 = particles[j];
         const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-        if (dist < 130) {
-          const alpha = (1 - dist / 130) * 0.12 * p.opacity;
+        if (dist < 120) {
+          const alpha = (1 - dist / 120) * 0.1 * p.opacity;
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(p2.x, p2.y);
           ctx.strokeStyle = isDark
             ? `rgba(108, 99, 255, ${alpha})`
-            : `rgba(79, 70, 229, ${alpha * 0.5})`;
-          ctx.lineWidth = 0.8;
+            : `rgba(79, 70, 229, ${alpha * 0.4})`;
+          ctx.lineWidth = 0.6;
           ctx.stroke();
         }
-      });
+      }
     });
 
     animFrame = requestAnimationFrame(draw);
