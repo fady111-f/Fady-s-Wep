@@ -1,4 +1,104 @@
+/* 
+  ===========================================================================
+  FADY FAWZY PORTFOLIO - COMPONENT & RESPONSIVE ENGINE (app.css)
+  ===========================================================================
+  Purpose: Dictates styles for major site sections (About, Skills, Experience, 
+  Projects, Education, Contact), Animation delays, Custom Cursors, 
+  and all Responsive Viewport Breakpoints (Tablet, Mobile, Coarse Touch).
+  
+  Key Implementation Decisions:
+  1. Responsive Spy Grid templates: Clean column wrap transitions.
+  2. Nearby Hover Sibling selection: Uses the CSS pseudo-class ':has()' on skill tags.
+  3. Seamless project filtering: Custom transitions utilizing '.hiding' and '.hide' classes.
+  4. Mobile containment fix: Disables backdrop filters when mobile menu is open.
+  5. Minimum Touch Target Rule: Ensures 44px vertical touch margins on tactile monitors.
+  ===========================================================================
+*/
+
 /* ===== ABOUT SECTION ===== */
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+  padding: 40px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-normal);
+}
+
+.about-content:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.about-content p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 2;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* Elevate readability on first introductory paragraph */
+.about-content p:first-child {
+  color: var(--text-primary);
+  font-size: 1.15rem;
+}
+
+.about-intro,
+.about-journey,
+.about-interests {
+  position: relative;
+}
+
+/* Numbered absolute backgrounds in about block paragraphs */
+.about-intro::before {
+  content: '01';
+  position: absolute;
+  left: -30px;
+  top: -10px;
+  font-size: 3rem;
+  opacity: 0.1;
+  font-weight: 900;
+  color: var(--accent-primary);
+}
+
+.about-journey::before {
+  content: '02';
+  position: absolute;
+  left: -30px;
+  top: -10px;
+  font-size: 3rem;
+  opacity: 0.1;
+  font-weight: 900;
+  color: var(--accent-secondary);
+}
+
+.about-interests::before {
+  content: '03';
+  position: absolute;
+  left: -30px;
+  top: -10px;
+  font-size: 3rem;
+  opacity: 0.1;
+  font-weight: 900;
+  color: var(--accent-tertiary);
+}
+
+.highlight {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+.about-cards-wrapper {
+  margin-top: 40px;
+}
+
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -22,6 +122,7 @@
 
 .about-info-cards { display: grid; gap: 14px; }
 
+/* Info card sliding left border animation */
 .info-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -35,6 +136,7 @@
   overflow: hidden;
 }
 
+/* Sliding active border line overlay */
 .info-card::after {
   content: '';
   position: absolute;
@@ -105,6 +207,7 @@
   overflow: hidden;
 }
 
+/* Top linear colored key border */
 .skill-category::before {
   content: '';
   position: absolute;
@@ -115,7 +218,7 @@
   transition: transform 0.4s var(--ease-smooth);
 }
 
-/* Subtle inner glow on card */
+/* Subtle glowing background sphere inside skills block */
 .skill-category::after {
   content: '';
   position: absolute;
@@ -171,6 +274,7 @@
   overflow: hidden;
 }
 
+/* Reflection sliding light across tag on hover */
 .skill-tag::before {
   content: '';
   position: absolute;
@@ -190,12 +294,21 @@
   box-shadow: 0 4px 12px rgba(108,99,255,0.2);
 }
 
+/* ADVANCED CSS RULE (Cascade Selector):
+   When any single skill-tag inside the panel is hovered, all OTHER non-hovered 
+   sibling tags dynamically update to a soft highlighted state for contrast. */
+.skill-tags:has(.skill-tag:hover) .skill-tag:not(:hover) {
+  border-color: rgba(108, 99, 255, 0.22);
+  background: rgba(108, 99, 255, 0.1);
+}
+
 /* ===== EXPERIENCE TIMELINE ===== */
 .timeline {
   position: relative;
   padding-left: 44px;
 }
 
+/* Vertical timeline path line */
 .timeline::before {
   content: '';
   position: absolute;
@@ -215,6 +328,7 @@
 
 .timeline-item:last-child { padding-bottom: 0; }
 
+/* Timeline point dot overlay (breathing infinite glow pulse) */
 .timeline-dot {
   position: absolute;
   left: 17px;
@@ -225,6 +339,12 @@
   box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15), 0 0 20px rgba(108, 99, 255, 0.4);
   z-index: 2;
   transform: translateX(-50%);
+  animation: dotPulse 3s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15), 0 0 20px rgba(108, 99, 255, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(108, 99, 255, 0.08), 0 0 30px rgba(108, 99, 255, 0.25); }
 }
 
 .timeline-dot::after {
@@ -246,6 +366,7 @@
   overflow: hidden;
 }
 
+/* Horizontal linear progress line on card header */
 .timeline-card::before {
   content: '';
   position: absolute;
@@ -263,7 +384,7 @@
   background: var(--bg-card-hover);
   border-color: var(--border-accent);
   box-shadow: var(--shadow-md), 0 0 40px rgba(108, 99, 255, 0.06);
-  transform: translateX(4px);
+  transform: translateX(4px); /* Moves card slightly rightwards */
 }
 
 .timeline-header {
@@ -334,6 +455,7 @@
 }
 
 /* ===== PROJECTS ===== */
+/* Pill Filters Navigation container */
 .project-filters {
   display: flex;
   justify-content: center;
@@ -367,6 +489,7 @@
   background: rgba(255,255,255,0.06);
 }
 
+/* Active filter button styles (matches brand gradients) */
 .filter-btn.active {
   background: var(--accent-gradient);
   color: #fff;
@@ -392,7 +515,25 @@
   min-height: 340px;
 }
 
-/* Corner gradient shimmer */
+/* Dynamic light glow (tracked via JS client mousemove) */
+.project-card .card-light {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(108, 99, 255, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 0;
+}
+
+.project-card:hover .card-light {
+  opacity: 1;
+}
+
+/* Corner indicator lines */
 .project-card::before {
   content: '';
   position: absolute;
@@ -404,6 +545,7 @@
   transition: transform 0.5s var(--ease-smooth);
 }
 
+/* Tech dot pattern graphics in upper right corner of cards */
 .project-card::after {
   content: '';
   position: absolute;
@@ -416,7 +558,10 @@
   transition: opacity 0.35s, transform 0.35s;
 }
 
-/* Fade-out in progress */
+/* PROJECT FILTERING ANIMATIONS (CRITICAL TIMING FLOW):
+   When a card category is filtered out, JS applies '.hiding' first which fades out
+   and scales down, and after 320ms transition window completes, '.hide' (display: none)
+   removes it from document grid layout. */
 .project-card.hiding {
   opacity: 0;
   pointer-events: none;
@@ -424,7 +569,7 @@
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Fully removed from grid layout */
+/* Structural hide rule */
 .project-card.hide {
   display: none;
 }
@@ -476,7 +621,7 @@
   font-size: 0.87rem;
   color: var(--text-secondary);
   line-height: 1.75;
-  flex-grow: 1;
+  flex-grow: 1; /* Pushes links and tags blocks down so bottom lines align */
 }
 
 .project-tags {
@@ -522,7 +667,7 @@
 
 .project-links a:hover {
   color: var(--accent-secondary);
-  gap: 10px;
+  gap: 10px; /* Slides arrow */
 }
 
 /* ===== EDUCATION ===== */
@@ -539,6 +684,7 @@
   overflow: hidden;
 }
 
+/* Brand keyline indicator on left boundary of education card */
 .education-card::before {
   content: '';
   position: absolute;
@@ -548,6 +694,7 @@
   border-radius: 0 4px 4px 0;
 }
 
+/* Halo reflection in upper right corner of card */
 .education-card::after {
   content: '';
   position: absolute;
@@ -661,6 +808,7 @@
   overflow: hidden;
 }
 
+/* Sliding horizontal arrow on links hover */
 .contact-link::after {
   content: '→';
   position: absolute;
@@ -718,7 +866,7 @@
   margin-top: 3px;
 }
 
-/* Contact form */
+/* Contact form panel styling */
 .contact-form {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -728,12 +876,25 @@
   overflow: hidden;
 }
 
+/* Top linear keyline border */
 .contact-form::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
   background: var(--accent-gradient);
+  transition: height 0.4s var(--ease-smooth);
+}
+
+/* Thickens key border and projects glow when typing inside inputs */
+.contact-form:focus-within::before {
+  height: 4px;
+  box-shadow: 0 2px 20px rgba(108, 99, 255, 0.3);
+}
+
+.contact-form:focus-within {
+  border-color: var(--border-accent);
+  box-shadow: 0 0 40px rgba(108, 99, 255, 0.08);
 }
 
 .contact-form h3 {
@@ -780,6 +941,7 @@ body.light-theme .form-group textarea {
   color: var(--text-muted);
 }
 
+/* Input focus glow highlight states */
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--accent-primary);
@@ -793,11 +955,26 @@ body.light-theme .form-group textarea {
 }
 
 /* ===== FOOTER ===== */
+/* Utilizes advanced backgroundorigin hacks to generate an inline top gradient border */
 .footer {
   padding: 44px 0;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid transparent;
+  background-image: linear-gradient(var(--bg-primary), var(--bg-primary)), var(--accent-gradient);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border-top: 1px solid;
+  border-image: linear-gradient(90deg, transparent, rgba(108, 99, 255, 0.35), rgba(168, 85, 247, 0.25), transparent) 1;
   position: relative;
   z-index: 1;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(108, 99, 255, 0.4), rgba(168, 85, 247, 0.3), transparent);
+  filter: blur(1px);
 }
 
 .footer-content {
@@ -836,6 +1013,7 @@ body.light-theme .form-group textarea {
 }
 
 /* ===== BACK TO TOP BUTTON ===== */
+/* Floating circle at bottom right. Toggled visible past 500px height. */
 .back-to-top {
   position: fixed;
   bottom: 32px;
@@ -864,11 +1042,12 @@ body.light-theme .form-group textarea {
 }
 
 .back-to-top:hover {
-  transform: translateY(-4px) scale(1.1);
+  transform: translateY(-4px) scale(1.1); /* Jumps up */
   box-shadow: 0 8px 30px rgba(108,99,255,0.5);
 }
 
 /* ===== SCROLL ANIMATIONS ===== */
+/* Reveals elements cleanly as users scroll down (toggled via IntersectionObserver) */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -880,13 +1059,21 @@ body.light-theme .form-group textarea {
   transform: translateY(0);
 }
 
+/* Incremental transition delays to stagger column cascades */
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 
 /* ===== CUSTOM CURSOR ===== */
-body { cursor: none; }
+/* Hides default native platform mouse arrow so the custom cursor renders without visual lag double-draws */
+body:not(.touch-device) { cursor: none; }
+
+/* Suppresses cursors divs on coarse interfaces */
+body.touch-device .cursor-dot,
+body.touch-device .cursor-outline {
+  display: none;
+}
 
 .cursor-dot,
 .cursor-outline {
@@ -911,6 +1098,7 @@ body { cursor: none; }
 }
 
 /* ===== HERO ANIMATIONS ===== */
+/* Staggers initial page entrance layout slides (delays increase as you go down layout block) */
 .hero-status-badge {
   animation: fadeInUp 0.7s ease both;
   animation-delay: 0.1s;
@@ -955,6 +1143,7 @@ body { cursor: none; }
 }
 
 /* ===== GRADIENT SECTION DIVIDER ===== */
+/* Places a soft, centered divider line between layout sections */
 section + section::before {
   content: '';
   display: block;
@@ -971,6 +1160,7 @@ section + section::before {
 }
 
 /* ===== TYPING CURSOR ===== */
+/* Animated vertical cursor bar after typing hero header titles */
 .hero-title::after {
   content: '|';
   animation: blink 1s step-end infinite;
@@ -986,12 +1176,12 @@ section + section::before {
 
 /* ===== RESPONSIVE ===== */
 
-/* ---------- TABLET (max 960px) ---------- */
+/* ---------- TABLET VIEWPORT (max 960px) ---------- */
 @media (max-width: 960px) {
   section { padding: 80px 0; }
 
   .hero-content {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Visual avatar moves to top, content center below */
     text-align: center;
     gap: 40px;
   }
@@ -1033,6 +1223,7 @@ section + section::before {
     padding: 32px 24px;
   }
 
+  /* Reset vertical indicator to horizontal line across top edge of cards on small tablets */
   .education-card::before {
     width: 100%; height: 3px;
     border-radius: 4px 4px 0 0;
@@ -1044,14 +1235,33 @@ section + section::before {
   .timeline::before { left: 13px; }
   .timeline-dot { left: 14px; }
 
-  /* Mobile fullscreen navigation */
+  /* MOBILE FULLSCREEN NAVIGATION FIX (CRITICAL BUG SOLVED):
+     When the mobile panel toggle '.menu-open' is active, we strip backdrop filters
+     and glass transparency from navbar parent class. This fixes positioning bugs 
+     so navigation overlays stay strictly anchored to viewport bounds during scrolling. */
+  .navbar.menu-open,
+  .navbar.menu-open.scrolled {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: transparent !important;
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure the brand logo remains visible above the fullscreen navigation menu */
+  .navbar.menu-open .nav-logo {
+    position: relative;
+    z-index: 1001 !important;
+  }
+
+  /* Mobile Fullscreen Navigation Overlay */
   .nav-links {
-    display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(8, 8, 17, 0.97);
+    background: rgba(8, 8, 17, 0.98);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -1059,17 +1269,26 @@ section + section::before {
     border-radius: 0;
     border: none;
     padding: 24px;
+    list-style: none;
     opacity: 0;
-    transition: opacity 0.3s var(--ease-smooth);
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s var(--ease-smooth), visibility 0.35s;
     z-index: 999;
   }
 
   body.light-theme .nav-links {
-    background: rgba(245, 245, 255, 0.97);
+    background: rgba(245, 245, 255, 0.99);
   }
 
-  .nav-links.open { display: flex; opacity: 1; }
+  /* Reveal menu panel */
+  .nav-links.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
 
+  /* Staggers mobile menu items slide-up animations */
   .nav-links li {
     opacity: 0;
     transform: translateY(20px);
@@ -1077,6 +1296,9 @@ section + section::before {
     width: 100%;
     max-width: 280px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .nav-links.open li { opacity: 1; transform: translateY(0); }
@@ -1094,6 +1316,7 @@ section + section::before {
     padding: 14px 32px;
     display: block;
     border-radius: var(--radius-md);
+    width: 100%;
   }
 
   .nav-links a:hover,
@@ -1105,6 +1328,7 @@ section + section::before {
     width: 48px;
     height: 48px;
     font-size: 1.2rem;
+    margin: 4px auto;
   }
 
   .nav-links .btn-primary-custom {
@@ -1125,16 +1349,17 @@ section + section::before {
     height: 44px;
   }
 
+  /* Toggles Hamburger Spans into close 'X' symbol */
   .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
   .nav-toggle.active span:nth-child(2) { opacity: 0; }
   .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
   .back-to-top { bottom: 20px; right: 20px; }
   .scroll-indicator { display: none; }
-  section[id] { scroll-margin-top: 70px; }
+  section[id] { scroll-margin-top: 70px; } /* Adjusts scroll padding top on mobile viewports */
 }
 
-/* ---------- MOBILE (max 640px) ---------- */
+/* ---------- MOBILE VIEWPORT (max 640px) ---------- */
 @media (max-width: 640px) {
   section { padding: 64px 0; }
   .container { padding: 0 20px; }
@@ -1212,7 +1437,7 @@ section + section::before {
   .footer-links a { padding: 6px 12px; font-size: 0.78rem; }
 }
 
-/* ---------- SMALL MOBILE (max 380px) ---------- */
+/* ---------- SMALL MOBILE VIEWPORT (max 380px) ---------- */
 @media (max-width: 380px) {
   .container { padding: 0 14px; }
 
@@ -1220,7 +1445,7 @@ section + section::before {
   .hero-status-badge { font-size: 0.68rem; padding: 5px 10px; }
 
   .hero-avatar-wrapper { width: 165px; height: 165px; }
-  .hero-floating-badge { display: none; }
+  .hero-floating-badge { display: none; } /* Hide floating bubbles on tiny mobile screens to avoid overlap */
 
   .stat-item { padding: 10px 12px; min-width: 70px; }
   .stat-number { font-size: 1.3rem; }
@@ -1246,12 +1471,13 @@ section + section::before {
   .form-group textarea { padding: 11px 14px; font-size: 0.85rem; }
 }
 
-/* ===== TOUCH DEVICES ===== */
+/* ===== COARSE TOUCH INTERFACES (coarse pointer, hover: none) ===== */
+/* Ensures high-tactile responsiveness for mobile or tablet users */
 @media (hover: none) and (pointer: coarse) {
   .cursor-dot, .cursor-outline { display: none !important; }
   body { cursor: auto; }
 
-  /* Ensure 44px minimum touch targets */
+  /* Enforce 44px Minimum Touch Target bounds (Standard usability checklist) */
   .nav-link,
   .filter-btn,
   .footer-links a,
@@ -1261,6 +1487,7 @@ section + section::before {
     align-items: center;
   }
 
+  /* Tactile compression feedback on tap */
   .btn-primary-custom:active,
   .btn-outline-custom:active,
   .filter-btn:active,
@@ -1272,7 +1499,7 @@ section + section::before {
     transition: transform 0.1s !important;
   }
 
-  /* Disable hover transforms that feel janky on touch */
+  /* Disable expensive 3D visual translations on touch screens to protect CPU performance */
   .project-card:hover { transform: none; }
   .info-card:hover { transform: none; }
   .timeline-card:hover { transform: none; }
@@ -1283,7 +1510,7 @@ section + section::before {
 /* Smooth scroll anchor offset */
 section[id] { scroll-margin-top: 88px; }
 
-/* Badge pulse */
+/* Float badge breathing pulse */
 .hero-floating-badge .badge-icon {
   animation: pulse 2.2s ease-in-out infinite;
 }
@@ -1292,6 +1519,178 @@ section[id] { scroll-margin-top: 88px; }
   50% { transform: scale(1.2); }
 }
 
+/* ===== NEWSLETTER SECTION ===== */
+#newsletter {
+  padding: 80px 0;
+  position: relative;
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
 
+.newsletter-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
 
+.newsletter-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
+.newsletter-content p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.newsletter-form:focus-within {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 30px rgba(108, 99, 255, 0.2);
+}
+
+.newsletter-form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  outline: none;
+  font-size: 1rem;
+}
+
+.newsletter-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.newsletter-form button {
+  padding: 12px 28px;
+  font-size: 0.95rem;
+}
+
+/* ===== FLOATING CONTACT BUTTON ===== */
+/* Placed at bottom: 96px to slide above the back-to-top circular trigger */
+.floating-contact-btn {
+  position: fixed;
+  bottom: 96px;
+  right: 32px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 8px 32px rgba(108, 99, 255, 0.4);
+  transition: all 0.35s var(--ease-smooth);
+  z-index: 900;
+  animation: float 4s ease-in-out infinite;
+  opacity: 1;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Collapses away gracefully on down scroll events */
+.floating-contact-btn.hidden {
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+  pointer-events: none;
+}
+
+.floating-contact-btn:hover {
+  transform: scale(1.12) translateY(-8px);
+  box-shadow: 0 12px 48px rgba(108, 99, 255, 0.6);
+  animation-play-state: paused; /* Suspends float bobbing animation while hovered */
+}
+
+/* Flying text tooltip popping out of the floating button on hover */
+.floating-contact-text {
+  position: absolute;
+  background: var(--bg-primary);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  right: 75px;
+  border: 1px solid var(--border-subtle);
+}
+
+.floating-contact-btn:hover .floating-contact-text {
+  opacity: 1;
+}
+
+/* Responsive Newsletter grids */
+@media (max-width: 768px) {
+  .newsletter-wrapper {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .newsletter-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .floating-contact-btn {
+    bottom: 84px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    font-size: 1.15rem;
+  }
+}
+
+/* ===== COPY TOAST ===== */
+/* Central popup confirming text copies (mailto/tel) */
+.copy-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(16, 185, 129, 0.95);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s var(--ease-smooth);
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
+  backdrop-filter: blur(12px);
+}
+
+.copy-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
