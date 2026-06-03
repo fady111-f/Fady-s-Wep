@@ -69,6 +69,7 @@ if (isTouchDevice()) {
 // are loaded, then slides/fades the loader via CSS opacity.
 // Removes the loader element from the DOM after 700ms transition time to save memory.
 window.addEventListener('load', () => {
+  if (typeof feather !== 'undefined') feather.replace();
   const loader = document.getElementById('pageLoader');
   if (loader) {
     setTimeout(() => {
@@ -519,9 +520,9 @@ if (themeToggle) {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'light') {
     bodyElement.classList.add('light-theme');
-    themeToggle.textContent = '\u2600\uFE0F'; // Sun emoji ☀️
+    themeToggle.innerHTML = '<i data-feather="sun"></i>';
   } else {
-    themeToggle.textContent = '\uD83C\uDF19'; // Moon emoji 🌙
+    themeToggle.innerHTML = '<i data-feather="moon"></i>';
   }
 
   themeToggle.addEventListener('click', () => {
@@ -529,7 +530,8 @@ if (themeToggle) {
     const isLight = bodyElement.classList.contains('light-theme');
 
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    themeToggle.textContent = isLight ? '\u2600\uFE0F' : '\uD83C\uDF19';
+    themeToggle.innerHTML = isLight ? '<i data-feather="sun"></i>' : '<i data-feather="moon"></i>';
+    if (typeof feather !== 'undefined') feather.replace();
 
     // Spin animation trigger
     themeToggle.style.transform = 'rotate(360deg) scale(1.2)';

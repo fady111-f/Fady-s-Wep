@@ -20,29 +20,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
+  /* Fonts */
+  --font-mono: 'JetBrains Mono', monospace;
+  
   /* Colors - Core Dark Theme */
-  --bg-primary: #080811;           /* Deep dark space background */
-  --bg-secondary: #0e0e1a;         /* Offset dark for components, cards, navigation */
-  --bg-card: rgba(255, 255, 255, 0.035); /* Glassmorphic transparent baseline */
-  --bg-card-hover: rgba(255, 255, 255, 0.065); /* Highlight overlay on hover */
-  --bg-glass: rgba(255, 255, 255, 0.05);       /* Pure transparent glass background */
-  --border-subtle: rgba(255, 255, 255, 0.07);  /* Hairline transparent border */
-  --border-accent: rgba(108, 99, 255, 0.45);   /* Indigo accent border glow */
-  --border-glow: rgba(108, 99, 255, 0.25);     /* Soft outer highlight color */
+  --bg-primary: #0A0F1C;           /* Elegant slate/navy dark background */
+  --bg-secondary: #111827;         /* Offset dark for components */
+  --bg-card: rgba(255, 255, 255, 0.03); /* Glassmorphic transparent baseline */
+  --bg-card-hover: rgba(255, 255, 255, 0.06); /* Highlight overlay on hover */
+  --bg-glass: rgba(255, 255, 255, 0.04);       /* Pure transparent glass background */
+  --border-subtle: rgba(255, 255, 255, 0.06);  /* Hairline transparent border */
+  --border-accent: rgba(99, 102, 241, 0.45);   /* Indigo accent border glow */
+  --border-glow: rgba(99, 102, 241, 0.25);     /* Soft outer highlight color */
 
   /* Text Contrast Hierarchy */
-  --text-primary: #eeeef5;         /* High-contrast off-white for titles */
-  --text-secondary: #9090ab;       /* Muted gray-blue for body paragraphs */
-  --text-muted: #5a5a72;           /* Low-contrast dark gray-blue for labels, timestamps */
+  --text-primary: #F8FAFC;         /* High-contrast off-white for titles */
+  --text-secondary: #94A3B8;       /* Muted slate for body paragraphs */
+  --text-muted: #64748B;           /* Low-contrast dark slate for labels, timestamps */
 
-  /* Gradient Palette & Accents */
-  --accent-primary: #6c63ff;       /* Indigo core brand */
-  --accent-secondary: #a855f7;     /* Purple brand */
-  --accent-tertiary: #06d6d0;      /* Neon teal brand */
-  --accent-pink: #f472b6;          /* Highlights and badge highlights */
-  --accent-gradient: linear-gradient(135deg, #6c63ff 0%, #a855f7 50%, #06d6d0 100%);
-  --accent-gradient-hover: linear-gradient(135deg, #8b85ff 0%, #c084fc 50%, #22eeea 100%);
-  --accent-gradient-diagonal: linear-gradient(45deg, #6c63ff, #a855f7);
+  /* Gradient Palette & Accents (Professional Blue/Indigo) */
+  --accent-primary: #3B82F6;       /* Blue */
+  --accent-secondary: #6366F1;     /* Indigo */
+  --accent-tertiary: #8B5CF6;      /* Violet */
+  --accent-pink: #EC4899;          /* Highlights and badge highlights */
+  --accent-gradient: linear-gradient(135deg, #3B82F6 0%, #6366F1 50%, #8B5CF6 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #60A5FA 0%, #818CF8 50%, #A78BFA 100%);
+  --accent-gradient-diagonal: linear-gradient(45deg, #3B82F6, #6366F1);
 
   /* Status Colors */
   --success: #10b981;              /* Green success cues */
@@ -79,24 +82,24 @@
 /* ===== LIGHT THEME OVERRIDES ===== */
 /* Activating the '.light-theme' class triggers a comprehensive sweep of values */
 body.light-theme {
-  --bg-primary: #f5f5ff;
-  --bg-secondary: #ffffff;
-  --bg-card: rgba(108, 99, 255, 0.04);
-  --bg-card-hover: rgba(108, 99, 255, 0.08);
-  --bg-glass: rgba(255, 255, 255, 0.7);
-  --border-subtle: rgba(0, 0, 0, 0.07);
-  --border-accent: rgba(108, 99, 255, 0.35);
-  --border-glow: rgba(108, 99, 255, 0.15);
+  --bg-primary: #F8FAFC;
+  --bg-secondary: #FFFFFF;
+  --bg-card: rgba(99, 102, 241, 0.03);
+  --bg-card-hover: rgba(99, 102, 241, 0.06);
+  --bg-glass: rgba(255, 255, 255, 0.8);
+  --border-subtle: rgba(15, 23, 42, 0.06);
+  --border-accent: rgba(99, 102, 241, 0.35);
+  --border-glow: rgba(99, 102, 241, 0.15);
 
-  --text-primary: #0f0f1a;
-  --text-secondary: #3d3d5c;
-  --text-muted: #7878a0;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
 
-  --accent-gradient: linear-gradient(135deg, #5b52ee 0%, #9333ea 50%, #0891b2 100%);
-  --shadow-sm: 0 2px 8px rgba(108,99,255,0.08);
-  --shadow-md: 0 8px 30px rgba(108,99,255,0.12);
-  --shadow-lg: 0 20px 60px rgba(108,99,255,0.15);
-  --shadow-glow: 0 0 40px rgba(108, 99, 255, 0.1);
+  --accent-gradient: linear-gradient(135deg, #2563EB 0%, #4F46E5 50%, #7C3AED 100%);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 8px 30px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 20px 60px rgba(15, 23, 42, 0.08);
+  --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.1);
 }
 
 /* Soften organic noise texture on light backgrounds */
@@ -522,12 +525,12 @@ section {
 
 /* Dynamic glow dot prefix before labels */
 .section-label::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  background: var(--accent-gradient);
-  border-radius: 50%;
+  content: '>';
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--accent-primary);
   flex-shrink: 0;
+  line-height: 1;
 }
 
 .section-title {
@@ -649,21 +652,18 @@ section {
   position: relative;
 }
 
-/* Shimmer overlay animation scrolling across Fady Fawzy's name */
 .hero-name::before {
-  content: attr(data-text); /* Grabs title name string dynamically */
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(108, 99, 255, 0.4) 45%,
-    rgba(168, 85, 247, 0.4) 55%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  content: "> ";
+  font-family: var(--font-mono);
+  color: var(--accent-primary);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 500;
+  -webkit-text-fill-color: var(--accent-primary);
+  margin-right: 8px;
+  position: relative;
+  top: -4px;
+}
+
   background-clip: text;
   animation: nameShimmer 3s ease-in-out 1.2s 1 both;
   pointer-events: none;
@@ -676,15 +676,23 @@ section {
 }
 
 .hero-title {
-  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-  font-weight: 600;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 500;
+  color: var(--accent-primary);
   margin-bottom: 22px;
   min-height: 1.8em; /* Protects height layout collapses during typing deletions */
   display: block;
+}
+
+.hero-title::after {
+  content: '_';
+  animation: cursorBlink 1s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .hero-description {
@@ -722,7 +730,7 @@ section {
 }
 
 .stat-number {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-mono);
   font-size: 1.9rem;
   font-weight: 800;
   background: var(--accent-gradient);
