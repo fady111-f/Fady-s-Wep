@@ -11,7 +11,7 @@
 // Note for developer/AI: Replace these credentials with Fady's active Firebase dashboard parameters.
 // Once set, this binds the admin dashboard directly to your live Firebase backend.
 const firebaseConfig = {
-  apiKey: "AIzaSyBVsH0PHmIh_jJQR71UHy0iFvDRNso017k",
+  apiKey: "AIzaSyBVsh0PHmIh_jJQR71UhY0iFvDRNsoO17k",
   authDomain: "fady-portfolio-d955b.firebaseapp.com",
   projectId: "fady-portfolio-d955b",
   storageBucket: "fady-portfolio-d955b.firebasestorage.app",
