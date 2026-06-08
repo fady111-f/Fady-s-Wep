@@ -920,7 +920,10 @@ async function handleNewsletterSubmit(e) {
     const response = await fetch(form.action, {
       method: form.method,
       mode: 'no-cors',
-      body: new FormData(form)
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `email=${encodeURIComponent(email)}`
     });
 
     if (response.ok || response.type === 'opaque') {
