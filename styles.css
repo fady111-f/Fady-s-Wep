@@ -233,11 +233,14 @@ body.no-scroll {
 
 /* ===== SCROLLBAR ===== */
 /* Styled scroll track to match portfolio dark accents */
-::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+  background: var(--accent-gradient);
   border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-gradient-hover);
 }
 
 /* ===== SCROLL PROGRESS ===== */

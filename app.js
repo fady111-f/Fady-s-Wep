@@ -373,36 +373,16 @@ async function handleSubmit(e) {
 // - Move radial light glow ('.card-light') to mouse coordinates.
 // - transform: perspective(1200px) activates 3D viewport space in the browser's rendering engine.
 function initProjectCardsTilt() {
-  const projectCards = document.querySelectorAll('.project-card');
-
-  projectCards.forEach(card => {
-    const light = card.querySelector('.card-light');
-
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left; // Mouse coordinates relative to card left edge
-      const y = e.clientY - rect.top;  // Mouse coordinates relative to card top edge
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      // Direct offset tilt computations
-      const rotateX = (y - centerY) / 22;
-      const rotateY = (centerX - x) / 22;
-
-      card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-7px)`;
-
-      // Positions the glassmorphism reflection overlay directly beneath the cursor
-      if (light) {
-        light.style.left = x + 'px';
-        light.style.top = y + 'px';
-      }
+  if (typeof VanillaTilt !== 'undefined') {
+    VanillaTilt.init(document.querySelectorAll(".project-card"), {
+      max: 8,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.15,
+      perspective: 1200,
+      scale: 1.02
     });
-
-    // Smooth CSS transitions restore original state when cursor exits card area
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
+  }
 }
 initProjectCardsTilt();
 
@@ -413,21 +393,21 @@ initProjectCardsTilt();
 // - Calculate mouse offset vector from button's exact center.
 // - Scale displacement by 0.14 (pull target by 14% of absolute cursor distance).
 // - Exiting mouse resets the displacement smoothly.
-// const magneticBtns = document.querySelectorAll('.btn-primary-custom, .btn-outline-custom');
-//
-// magneticBtns.forEach(btn => {
-//   btn.addEventListener('mousemove', (e) => {
-//     const rect = btn.getBoundingClientRect();
-//     const x = e.clientX - rect.left - rect.width / 2;
-//     const y = e.clientY - rect.top - rect.height / 2;
-//
-//     btn.style.transform = `translate(${x * 0.14}px, ${y * 0.14}px)`;
-//   });
-//
-//   btn.addEventListener('mouseleave', () => {
-//     btn.style.transform = '';
-//   });
-// });
+const magneticBtns = document.querySelectorAll('.btn-primary-custom, .btn-outline-custom');
+
+magneticBtns.forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    btn.style.transform = `translate(${x * 0.14}px, ${y * 0.14}px)`;
+  });
+
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
 
 // ===== TYPING EFFECT ON HERO TITLE =====
 // Cyclic typewriter animation for descriptive headings under the main hero.
