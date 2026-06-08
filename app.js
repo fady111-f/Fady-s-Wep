@@ -321,6 +321,10 @@ async function handleSubmit(e) {
   const btn = form.querySelector('button[type="submit"]');
   const originalHTML = btn.innerHTML;
 
+  // Lock button size to prevent layout shift
+  btn.style.minWidth = btn.offsetWidth + 'px';
+  btn.style.minHeight = btn.offsetHeight + 'px';
+
   btn.innerHTML = '<span>Sending...</span>';
   btn.style.pointerEvents = 'none';
 
@@ -346,6 +350,8 @@ async function handleSubmit(e) {
       btn.innerHTML = originalHTML;
       btn.style.background = '';
       btn.style.pointerEvents = '';
+      btn.style.minWidth = '';
+      btn.style.minHeight = '';
     }, 3000);
   }
 }
@@ -910,6 +916,10 @@ async function handleNewsletterSubmit(e) {
 
   const email = input.value.trim();
 
+  // Lock button size to prevent layout shift
+  button.style.minWidth = button.offsetWidth + 'px';
+  button.style.minHeight = button.offsetHeight + 'px';
+
   // Show immediate subscribing visual cue
   button.innerHTML = '<span>Subscribing...</span>';
   button.style.pointerEvents = 'none';
@@ -974,6 +984,8 @@ async function handleNewsletterSubmit(e) {
       button.innerHTML = originalHTML;
       button.style.background = '';
       button.style.pointerEvents = '';
+      button.style.minWidth = '';
+      button.style.minHeight = '';
       input.style.opacity = '1';
       input.disabled = false;
     }, 3000);
