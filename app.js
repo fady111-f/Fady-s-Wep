@@ -95,7 +95,10 @@ window.addEventListener('load', async () => {
     loader.classList.add('loaded');
     setTimeout(() => {
       loader.remove();
+      window.dispatchEvent(new Event('preloaderFinished'));
     }, 700);
+  } else {
+    window.dispatchEvent(new Event('preloaderFinished'));
   }
 });
 
@@ -408,6 +411,57 @@ magneticBtns.forEach(btn => {
     btn.style.transform = '';
   });
 });
+
+// ===== HACKER TEXT EFFECT ON HERO NAME =====
+// Typing effect that writes ">_ HELLO WORLD" then scrambles into "Fady Fawzy"
+const heroNameEl = document.querySelector('.hero-name');
+if (heroNameEl) {
+  const finalName = heroNameEl.getAttribute('data-text') || "Fady Fawzy";
+  const startText = ">_ HELLO WORLD";
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+  
+  // Hide text initially so it's empty when page loads
+  heroNameEl.style.opacity = '0';
+  heroNameEl.innerText = "";
+  
+  // Wait for the preloader to finish its animation
+  window.addEventListener('preloaderFinished', () => {
+    heroNameEl.style.opacity = '1';
+    
+    // 500ms delay before typing starts
+    setTimeout(() => {
+      let typeIndex = 0;
+      // 1. Type ">_ HELLO WORLD"
+      const typeInterval = setInterval(() => {
+        heroNameEl.innerText = startText.substring(0, typeIndex + 1);
+        typeIndex++;
+        if (typeIndex >= startText.length) {
+          clearInterval(typeInterval);
+          
+          // 2. Pause, then scramble to final name
+          setTimeout(() => {
+            let iteration = 0;
+            const scrambleInterval = setInterval(() => {
+              heroNameEl.innerText = finalName
+                .split("")
+                .map((letter, index) => {
+                  if (index < iteration) return finalName[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              
+              if (iteration >= finalName.length) {
+                clearInterval(scrambleInterval);
+              }
+              // The lower the increment, the more scrambling frames before locking a letter
+              iteration += 1 / 3;
+            }, 35);
+          }, 1000); // 1-second pause after HELLO WORLD
+        }
+      }, 100); // 100ms per keystroke
+    }, 500);
+  });
+}
 
 // ===== TYPING EFFECT ON HERO TITLE =====
 // Cyclic typewriter animation for descriptive headings under the main hero.
