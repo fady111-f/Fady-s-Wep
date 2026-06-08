@@ -18,16 +18,20 @@
   -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0A0F1C" />
   
   <!-- Strict SEO Metadata -->
-  <title>Fady Fawzy — Computer Engineering Student & Developer </title>
+  <title>Fady Fawzy — Computer Engineering Student & Developer</title>
+  <link rel="canonical" href="https://YOUR_DOMAIN/" /> <!-- TODO: Replace YOUR_DOMAIN with your deployed URL -->
   <meta name="description" content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI. GPA 3.94, ranked 3rd." />
   
   <!-- Open Graph / Social Sharing Meta Tags (Rich snippets when sharing link) -->
-  <meta property="og:title" content="Fady Fawzy — Computer Engineering Student &amp; Developer">
-  <meta property="og:description" content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="logo.png">
+  <meta property="og:title" content="Fady Fawzy — Computer Engineering Student &amp; Developer" />
+  <meta property="og:description" content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://YOUR_DOMAIN/" /> <!-- TODO: Replace YOUR_DOMAIN -->
+  <meta property="og:image" content="https://YOUR_DOMAIN/logo.png" /> <!-- TODO: Replace YOUR_DOMAIN -->
 
   <!-- Favicon and Touch Icon Cache Declarations -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -41,6 +45,7 @@
   <!-- Google Fonts Preconnect Connections (Improves load times for premium typography) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- 
@@ -56,7 +61,7 @@
   </div>
 
   <!-- Scroll Progress Indicator (Thin horizontal indicator bar mapped on screen top) -->
-  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="scroll-progress" id="scrollProgress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
   <!-- Interactive Particle Physics Canvas (Renders connecting nodes on requestAnimationFrame) -->
   <canvas id="particleCanvas"></canvas>
@@ -88,7 +93,7 @@
         <li><a href="#experience" class="nav-link">Experience</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
         <!-- Theme Toggle Switch (Persistent state stored inside localStorage) -->
-        <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme"><i data-feather="moon"></i></button></li>
+        <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme" aria-pressed="false"><i data-feather="moon"></i></button></li>
         <li><a href="#contact" class="btn-primary-custom" style="padding: 10px 22px; font-size: 0.82rem;"><span>Contact</span></a></li>
       </ul>
       
@@ -489,10 +494,10 @@
         
         <!-- Dynamic Filter Controls -->
         <div class="project-filters reveal">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="embedded">Embedded/Hardware</button>
-          <button class="filter-btn" data-filter="software">Software/C++</button>
-          <button class="filter-btn" data-filter="design">Design/Research</button>
+          <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-btn" data-filter="embedded" aria-pressed="false">Embedded/Hardware</button>
+          <button class="filter-btn" data-filter="software" aria-pressed="false">Software/C++</button>
+          <button class="filter-btn" data-filter="design" aria-pressed="false">Design/Research</button>
         </div>
 
         <!-- Project Cards Grid Layout -->
@@ -704,7 +709,6 @@
         </div>
       </div>
     </section>
-  </main>
 
   <!-- 
     ===========================================================================
@@ -729,6 +733,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- 
     ===========================================================================
@@ -772,14 +777,14 @@
   <div class="copy-toast" id="copyToast">Copied to clipboard!</div>
 
   <!-- Firebase App & Services SDK Compat (v10 CDN) -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 
-  <!-- Icon Library -->
-  <script src="https://unpkg.com/feather-icons"></script>
+  <!-- Icon Library (pinned version for stability) -->
+  <script defer src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js"></script>
 
   <!-- Core JavaScript Hook -->
-  <script src="app.js"></script>
+  <script defer src="app.js"></script>
 </body>
 </html>

@@ -17,7 +17,7 @@
 
 /* ===== DESIGN SYSTEM ===== */
 /* Premium Google Typography */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Fonts loaded via <link> in HTML <head> for better performance (non-render-blocking) */
 
 :root {
   /* Fonts */
@@ -130,10 +130,8 @@ body,
 .theme-toggle,
 .stat-item,
 .hero-floating-badge,
-.terminal-window,
 .info-card,
 .education-card,
-.achievement-card,
 .skill-category,
 .timeline-card,
 .project-card,
@@ -681,15 +679,7 @@ section {
   display: block;
 }
 
-.hero-title::after {
-  content: '_';
-  animation: cursorBlink 1s infinite;
-}
-
-@keyframes cursorBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
+/* Typing cursor defined in app.css (.hero-title::after) */
 
 .hero-description {
   font-size: 1.02rem;

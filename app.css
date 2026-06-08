@@ -99,26 +99,7 @@
   margin-top: 40px;
 }
 
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 52px;
-  align-items: start;
-}
-
-.about-text {
-  font-size: 1.02rem;
-  color: var(--text-secondary);
-  line-height: 1.95;
-}
-
-.about-text p + p { margin-top: 18px; }
-
-.about-text p:first-child {
-  font-size: 1.08rem;
-  color: var(--text-primary);
-  font-weight: 400;
-}
+/* .about-grid and .about-text removed — not used in current HTML */
 
 .about-info-cards { display: grid; gap: 14px; }
 
@@ -959,7 +940,6 @@ body.light-theme .form-group textarea {
 /* Utilizes advanced backgroundorigin hacks to generate an inline top gradient border */
 .footer {
   padding: 44px 0;
-  border-top: 1px solid transparent;
   background-image: linear-gradient(var(--bg-primary), var(--bg-primary)), var(--accent-gradient);
   background-origin: border-box;
   background-clip: padding-box, border-box;
@@ -1096,6 +1076,12 @@ body.touch-device .cursor-outline {
   width: 38px; height: 38px;
   border: 2px solid rgba(108, 99, 255, 0.5);
   transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+/* Respect reduced motion preferences — restore default cursor and hide custom one */
+@media (prefers-reduced-motion: reduce) {
+  body:not(.touch-device) { cursor: auto; }
+  .cursor-dot, .cursor-outline { display: none; }
 }
 
 /* ===== HERO ANIMATIONS ===== */
@@ -1678,9 +1664,7 @@ section[id] { scroll-margin-top: 88px; }
     justify-content: center;
   }
 
-  .testimonials-grid {
-    grid-template-columns: 1fr;
-  }
+
 
   .floating-contact-btn {
     bottom: 84px;

@@ -63,6 +63,13 @@ if (isTouchDevice()) {
   document.body.classList.add('touch-device');
 }
 
+// Utility: Escape HTML to prevent XSS in dynamically rendered content
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 // ===== PAGE LOADER =====
 // Operates on global window load. Dismisses the custom circular preloader.
 // Applies a 400ms buffer to ensure initial page paints, assets, and local variables
@@ -97,6 +104,10 @@ const sections = document.querySelectorAll('section[id]');
 const navLinkElements = document.querySelectorAll('.nav-link');
 const cursorDot = document.getElementById('cursorDot');
 const cursorOutline = document.getElementById('cursorOutline');
+const floatingContactBtn = document.getElementById('floatingContactBtn');
+const parallaxSections = document.querySelectorAll('#hero, #about, #skills, #projects');
+let lastScrollTop = 0;
+let floatingScrollTimer = null;
 
 // ===== SINGLE CONSOLIDATED SCROLL HANDLER =====
 // EXTREMELY IMPORTANT FOR PERFORMANCE:
@@ -141,6 +152,7 @@ function onScroll() {
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (winScroll / height) * 100;
     scrollProgress.style.width = scrolled + '%';
+    scrollProgress.setAttribute('aria-valuenow', Math.round(scrolled));
   }
 
   // Back to top button visibility threshold
@@ -150,6 +162,30 @@ function onScroll() {
     } else {
       backToTop.classList.remove('visible');
     }
+  }
+
+  // Floating contact button visibility (debounced scroll direction detection)
+  if (floatingContactBtn) {
+    if (floatingScrollTimer) clearTimeout(floatingScrollTimer);
+    floatingScrollTimer = setTimeout(() => {
+      if (scrollY > lastScrollTop && scrollY > 300) {
+        floatingContactBtn.classList.add('hidden');
+      } else {
+        floatingContactBtn.classList.remove('hidden');
+      }
+      lastScrollTop = scrollY <= 0 ? 0 : scrollY;
+    }, 50);
+  }
+
+  // Subtle parallax on section backgrounds (desktop only)
+  if (!isTouchDevice()) {
+    parallaxSections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const offset = (scrollY - section.offsetTop) * 0.03;
+        section.style.backgroundPositionY = offset + 'px';
+      }
+    });
   }
 }
 
@@ -437,13 +473,14 @@ if (heroTitle) {
 // - 1500ms startup delay protects rendering resources from fighting the CSS entry anim.
 const heroVisual = document.querySelector('.hero-visual');
 
-if (heroVisual) {
+if (heroVisual && !isTouchDevice()) {
+  function heroParallaxHandler(e) {
+    const x = (e.clientX / window.innerWidth - 0.5) * 18;
+    const y = (e.clientY / window.innerHeight - 0.5) * 18;
+    heroVisual.style.transform = `translate(${x}px, ${y}px)`;
+  }
   setTimeout(() => {
-    window.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 18;
-      const y = (e.clientY / window.innerHeight - 0.5) * 18;
-      heroVisual.style.transform = `translate(${x}px, ${y}px)`;
-    });
+    window.addEventListener('mousemove', heroParallaxHandler);
   }, 1500);
 }
 
@@ -478,7 +515,7 @@ function loopCursor() {
   }
   requestAnimationFrame(loopCursor);
 }
-loopCursor();
+if (!isTouchDevice()) loopCursor();
 
 // Connect custom cursor hover events to interactive items (expands outline circle, overlays semi-transparent color)
 function initCustomCursorHoverListeners() {
@@ -521,8 +558,10 @@ if (themeToggle) {
   if (savedTheme === 'light') {
     bodyElement.classList.add('light-theme');
     themeToggle.innerHTML = '<i data-feather="sun"></i>';
+    themeToggle.setAttribute('aria-pressed', 'true');
   } else {
     themeToggle.innerHTML = '<i data-feather="moon"></i>';
+    themeToggle.setAttribute('aria-pressed', 'false');
   }
 
   themeToggle.addEventListener('click', () => {
@@ -531,6 +570,7 @@ if (themeToggle) {
 
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     themeToggle.innerHTML = isLight ? '<i data-feather="sun"></i>' : '<i data-feather="moon"></i>';
+    themeToggle.setAttribute('aria-pressed', isLight ? 'true' : 'false');
     if (typeof feather !== 'undefined') feather.replace();
 
     // Spin animation trigger
@@ -558,8 +598,12 @@ const projectCardsGrid = document.querySelectorAll('.project-card');
 
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
+    filterBtns.forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-pressed', 'false');
+    });
     btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
 
     const filterValue = btn.getAttribute('data-filter');
 
@@ -902,14 +946,13 @@ async function handleNewsletterSubmit(e) {
       throw new Error('Newsletter request rejected by server.');
     }
   } catch (error) {
-    // If offline or blocked, save locally anyway and report success to protect portfolio UX!
+    // Save locally as fallback when network is unavailable
     let subscribers = JSON.parse(localStorage.getItem('subscribers') || '[]');
     if (!subscribers.includes(email)) {
       subscribers.push(email);
       localStorage.setItem('subscribers', JSON.stringify(subscribers));
     }
     
-    // Save locally to Firestore as backup if config is active
     if (isFirebaseEnabled && db) {
       try {
         await db.collection("subscribers").add({
@@ -919,9 +962,9 @@ async function handleNewsletterSubmit(e) {
       } catch (err) {}
     }
     
-    // Show premium fallback confirmation
-    button.innerHTML = '<span>✓ Subscribed!</span>';
-    button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    // Show accurate offline fallback status (amber instead of green)
+    button.innerHTML = '<span>✓ Saved Locally!</span>';
+    button.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
     form.reset();
   } finally {
     setTimeout(() => {
@@ -935,13 +978,8 @@ async function handleNewsletterSubmit(e) {
 }
 
 // ===== FLOATING CONTACT BUTTON =====
-// Floating button at bottom right (scrolled up past back-to-top button at bottom: 96px).
-// Logic:
-// 1. Toggles section scroll to '#contact' when clicked.
-// 2. Monitors scroll direction with 50ms debouncer.
-// 3. Hides button (scales away) when scrolling down past 300px threshold to clear screen,
-//    and brings it back when scrolling up.
-const floatingContactBtn = document.getElementById('floatingContactBtn');
+// Click handler scrolls to #contact section.
+// Scroll-based visibility is managed in the unified onScroll() handler.
 if (floatingContactBtn) {
   floatingContactBtn.addEventListener('click', () => {
     const contactSection = document.getElementById('contact');
@@ -949,74 +987,9 @@ if (floatingContactBtn) {
       contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
-
-  let lastScrollTop = 0;
-  let scrollTimer = null;
-
-  window.addEventListener('scroll', () => {
-    if (scrollTimer) clearTimeout(scrollTimer);
-
-    scrollTimer = setTimeout(() => {
-      let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-      // If scrolling down and past 300px, slide out contact button
-      if (currentScroll > lastScrollTop && currentScroll > 300) {
-        floatingContactBtn.classList.add('hidden');
-      } else {
-        floatingContactBtn.classList.remove('hidden');
-      }
-      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-    }, 50);
-  }, { passive: true });
 }
 
-// ===== SMOOTH SCROLL REVEAL ANIMATION ENHANCEMENT ===== 
-// REDUNDANCY & DYNAMIC FALLBACK:
-// Operates as a dynamic IntersectionObserver system for counters.
-// Tracks any element possessing [data-count] attributes (e.g. stats in education or projects).
-// Uses a Set to ensure that once a count finishes running, it is not executed again.
-const counterElements = document.querySelectorAll('[data-count]');
-const observedCounters = new Set();
-
-const counterScrollObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    const element = entry.target;
-    if (entry.isIntersecting && !observedCounters.has(element)) {
-      observedCounters.add(element);
-      animateCounter(element);
-    }
-  });
-}, { threshold: 0.5 });
-
-// Animates counting transitions dynamically
-// Math details:
-// - Uses quadratic ease-out curve (eased = -1 + (4 - 2 * progress) * progress)
-// - Locks transition at exactly 1.5 seconds (1500ms).
-function animateCounter(element) {
-  const target = parseFloat(element.getAttribute('data-count'));
-  const duration = 1500;
-  const isDecimal = target % 1 !== 0;
-  let currentValue = 0;
-  const start = Date.now();
-
-  function update() {
-    const elapsed = Date.now() - start;
-    const progress = Math.min(elapsed / duration, 1);
-    // Quadratic Ease-Out formula
-    const eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
-    currentValue = eased * target;
-
-    element.textContent = isDecimal ? currentValue.toFixed(2) : Math.round(currentValue);
-
-    if (progress < 1) {
-      requestAnimationFrame(update);
-    }
-  }
-
-  requestAnimationFrame(update);
-}
-
-counterElements.forEach(el => counterScrollObserver.observe(el));
+// Duplicate counter system removed — handled by animateCounters() + counterObserver above.
 
 // ===== CLICK-TO-COPY ON CONTACT LINKS =====
 // Simplifies contact exchanges by allowing email/phone clicks to copy text automatically.
@@ -1032,6 +1005,9 @@ let toastTimeout = null;
 
 copyableLinks.forEach(link => {
   link.addEventListener('click', (e) => {
+    // On touch devices, allow default behavior (open email client / phone dialer)
+    if (isTouchDevice()) return;
+
     e.preventDefault();
     const text = link.getAttribute('data-copy');
 
@@ -1052,26 +1028,7 @@ copyableLinks.forEach(link => {
   });
 });
 
-// ===== SUBTLE PARALLAX ON SECTION BACKGROUNDS =====
-// Generates light vertical parallax backgrounds on primary content grids.
-// Restriction: Suppressed entirely on touch interfaces (via isTouchDevice check)
-// to prevent janky, delayed screen updates or visual stutter.
-// Formula: offset = (scrollY - sectionOffsetTop) * 0.03 (moves background by 3% of scroll difference).
-const parallaxSections = document.querySelectorAll('#hero, #about, #skills, #projects');
-
-if (!isTouchDevice()) {
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    parallaxSections.forEach(section => {
-      const rect = section.getBoundingClientRect();
-      // Only process sections that are actively inside view limits
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        const offset = (scrollY - section.offsetTop) * 0.03;
-        section.style.backgroundPositionY = offset + 'px';
-      }
-    });
-  }, { passive: true });
-}
+// Parallax logic integrated into the unified onScroll() handler above.
 
 // ===== ADVANCED CURSER GLOW EFFECT (Creative Enhancement) - REMOVED =====
 // Feature removed per user request
@@ -1103,8 +1060,7 @@ async function syncPortfolioData() {
         countEl.textContent = statsData.projectsCount;
       }
 
-      // Re-trigger counter animations once updated
-      animateCounters();
+      // Counter animations are handled by the IntersectionObserver
     }
 
     // 2. Sync Dynamic Skills
@@ -1112,7 +1068,7 @@ async function syncPortfolioData() {
     if (!skillsSnapshot.empty) {
       skillsSnapshot.forEach(doc => {
         const categoryData = doc.data();
-        const cat = categoryData.category; // 'languages', 'tools', 'soft'
+        const cat = categoryData.category;
         const list = categoryData.list || [];
 
         let targetSelector = "";
@@ -1122,7 +1078,7 @@ async function syncPortfolioData() {
 
         const tagsContainer = document.querySelector(targetSelector);
         if (tagsContainer && list.length > 0) {
-          tagsContainer.innerHTML = list.map(skill => `<span class="skill-tag">${skill}</span>`).join('');
+          tagsContainer.innerHTML = list.map(skill => `<span class="skill-tag">${escapeHTML(skill)}</span>`).join('');
         }
       });
     }
