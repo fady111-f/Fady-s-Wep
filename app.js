@@ -427,6 +427,11 @@ window.addEventListener('keydown', (e) => {
       typedSequence = '';
       openTerminal();
     }
+
+    if (typedSequence.endsWith('helloworld')) {
+      typedSequence = '';
+      activateHelloWorld();
+    }
   }
   // Ctrl + \ also opens terminal
   if (e.ctrlKey && e.key === '\\') {
@@ -552,6 +557,19 @@ function typeTerminalText(text, index, callback) {
     }, 15); // Fast typing speed
   } else {
     if (callback) callback();
+  }
+}
+
+function activateHelloWorld() {
+  if (typeof Swal !== 'undefined') {
+    Swal.fire({
+      title: 'HELLO WORLD! 🌍',
+      text: 'Welcome to the Matrix.',
+      icon: 'info',
+      background: 'rgba(10, 15, 28, 0.95)',
+      color: '#10b981',
+      confirmButtonColor: '#10b981'
+    });
   }
 }
 
