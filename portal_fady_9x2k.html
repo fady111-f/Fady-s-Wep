@@ -13,382 +13,288 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Administrative dashboard for managing Fady Fawzy portfolio content.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>Admin Portal — Fady Fawzy Portfolio</title>
+  <title>Admin Dashboard — Premium Control Panel</title>
   
-  <!-- Reuse design system & component styles -->
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Base Styles -->
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="app.css" />
   
-  <!-- Custom administrative layout fixes -->
-  <style>
-    .admin-container {
-      max-width: 1000px;
-      margin: 120px auto 60px;
-      padding: 0 20px;
-      position: relative;
-      z-index: 1;
-    }
-    .admin-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-2xl);
-      padding: 44px;
-      backdrop-filter: blur(28px) saturate(1.8);
-      -webkit-backdrop-filter: blur(28px) saturate(1.8);
-      box-shadow: var(--shadow-lg), var(--shadow-glow);
-    }
-    .admin-login-wrapper {
-      max-width: 440px;
-      margin: 180px auto;
-    }
-    .admin-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 32px;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 12px;
-      flex-wrap: wrap;
-    }
-    .admin-tab-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      color: var(--text-secondary);
-      padding: 10px 20px;
-      border-radius: var(--radius-md);
-      font-weight: 600;
-      font-size: 0.86rem;
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-    .admin-tab-btn:hover {
-      color: var(--text-primary);
-      background: rgba(255,255,255,0.03);
-    }
-    .admin-tab-btn.active {
-      background: rgba(108, 99, 255, 0.15);
-      color: #c4c0ff;
-      border-color: rgba(108, 99, 255, 0.25);
-    }
-    .admin-panel-section {
-      display: none;
-      animation: fadeIn 0.4s ease forwards;
-    }
-    .admin-panel-section.active {
-      display: block;
-    }
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 36px;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 20px;
-    }
-    .admin-header h1 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-    .admin-logout-btn {
-      background: rgba(239, 68, 68, 0.1);
-      color: #f87171;
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      padding: 8px 18px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: 600;
-      transition: all 0.25s;
-    }
-    .admin-logout-btn:hover {
-      background: rgba(239, 68, 68, 0.22);
-      border-color: #ef4444;
-    }
-    .data-table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-    }
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.86rem;
-    }
-    .data-table th, .data-table td {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .data-table th {
-      background: rgba(108, 99, 255, 0.08);
-      font-weight: 700;
-      color: var(--text-primary);
-      text-transform: uppercase;
-      font-size: 0.72rem;
-      letter-spacing: 1.5px;
-    }
-    .data-table tr:last-child td {
-      border-bottom: none;
-    }
-    .data-table tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-    .action-badge {
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s;
-    }
-    .badge-edit {
-      background: rgba(108, 99, 255, 0.15);
-      color: #a8a2ff;
-      margin-right: 6px;
-    }
-    .badge-edit:hover { background: rgba(108, 99, 255, 0.28); }
-    .badge-delete {
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-    }
-    .badge-delete:hover { background: rgba(239, 68, 68, 0.28); }
-    .hide { display: none !important; }
-    .toast-success {
-      background: linear-gradient(135deg, #10b981, #059669) !important;
-      box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4) !important;
-    }
-  </style>
+  <!-- Premium Admin Specific Styles -->
+  <link rel="stylesheet" href="admin.css" />
+  
+  <!-- SweetAlert2 CSS Override via cdn -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
-<body class="touch-device"> <!-- Force cursor default for standard admin input actions -->
+<body class="touch-device">
 
-  <!-- Ambient Glow Orbs -->
+  <!-- Ambient Background -->
   <div class="bg-glow">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
   </div>
-
-  <!-- Noise Texture overlay -->
+  <!-- Noise Texture -->
   <div style="pointer-events: none; z-index: 0; position: fixed; inset: 0; background-image: url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E&quot;); opacity: 0.4;"></div>
 
   <!-- ===== LOGIN WRAPPER ===== -->
   <div class="admin-login-wrapper" id="loginWrapper">
     <div class="admin-card">
-      <div style="text-align: center; margin-bottom: 28px;">
-        <span style="font-size: 3rem;">🔒</span>
-        <h2 style="font-family: 'Outfit', sans-serif; font-weight: 800; letter-spacing: -1px; margin-top: 12px;">Admin Login</h2>
-        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">Fady Fawzy Portfolio Database</p>
+      <div style="text-align: center; margin-bottom: 32px;">
+        <i data-feather="lock" style="width: 48px; height: 48px; color: var(--accent-primary); margin-bottom: 16px;"></i>
+        <h2 style="font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800; margin: 0;">Admin Login</h2>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">Secure Portfolio Access</p>
       </div>
       
       <form id="loginForm">
-        <div class="form-group">
-          <label for="adminEmail">Admin Email</label>
-          <input type="email" id="adminEmail" placeholder="admin@example.com" required autocomplete="email" />
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="adminEmail">Email Address</label>
+          <input type="email" id="adminEmail" placeholder="admin@domain.com" required autocomplete="email" />
         </div>
-        <div class="form-group" style="margin-bottom: 28px;">
+        <div class="form-group" style="margin-bottom: 32px;">
           <label for="adminPassword">Password</label>
           <input type="password" id="adminPassword" placeholder="••••••••" required autocomplete="current-password" />
         </div>
-        <button type="submit" class="btn-primary-custom" style="width: 100%; justify-content: center;">
-          <span>Unlock Dashboard</span>
+        <button type="submit" class="btn-primary-custom" style="width: 100%; justify-content: center; padding: 14px;">
+          <span>Unlock Dashboard</span> <i data-feather="arrow-right"></i>
         </button>
       </form>
     </div>
   </div>
 
-  <!-- ===== ADMIN DASHBOARD WRAPPER ===== -->
-  <div class="admin-container hide" id="dashboardWrapper">
-    <div class="admin-card">
+  <!-- ===== PREMIUM DASHBOARD WRAPPER ===== -->
+  <div class="admin-wrapper hide" id="dashboardWrapper">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <h2>Dashboard</h2>
+        <p>Live Sync Mode</p>
+      </div>
       
-      <!-- Top Header -->
-      <div class="admin-header">
-        <div>
-          <h1>System Control Panel</h1>
-          <p style="color: var(--text-muted); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Google Firebase Live Integration</p>
-        </div>
-        <button class="admin-logout-btn" id="logoutBtn">Lock Console 🔓</button>
-      </div>
-
-      <!-- Tab Buttons -->
-      <div class="admin-tabs">
-        <button class="admin-tab-btn active" data-tab="stats">📈 Statistics</button>
-        <button class="admin-tab-btn" data-tab="projects">📁 Projects List</button>
-        <button class="admin-tab-btn" data-tab="skills">⚡ Skills Arsenal</button>
-        <button class="admin-tab-btn" data-tab="subscribers">👥 CRM Subscribers</button>
-      </div>
-
-      <!-- 1. STATS PANEL -->
-      <div class="admin-panel-section active" id="tab-stats">
-        <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; margin-bottom: 24px;">Quick Statistics Indicators</h2>
-        <form id="statsForm">
-          <div class="form-group">
-            <label for="statGPA">Accumulated GPA</label>
-            <input type="text" id="statGPA" placeholder="3.94" required />
-          </div>
-          <div class="form-group">
-            <label for="statRank">Class Rank Badge</label>
-            <input type="text" id="statRank" placeholder="3rd" required />
-          </div>
-          <div class="form-group" style="margin-bottom: 28px;">
-            <label for="statCount">Total Finished Projects</label>
-            <input type="number" id="statCount" placeholder="6" required />
-          </div>
-          <button type="submit" class="btn-primary-custom">
-            <span>Update Statistics</span>
+      <ul class="sidebar-menu">
+        <li>
+          <button class="admin-tab-btn active" data-tab="stats">
+            <i data-feather="bar-chart-2"></i> Statistics
           </button>
-        </form>
+        </li>
+        <li>
+          <button class="admin-tab-btn" data-tab="projects">
+            <i data-feather="folder"></i> Projects Inventory
+          </button>
+        </li>
+        <li>
+          <button class="admin-tab-btn" data-tab="skills">
+            <i data-feather="cpu"></i> Skills Arsenal
+          </button>
+        </li>
+        <li>
+          <button class="admin-tab-btn" data-tab="subscribers">
+            <i data-feather="users"></i> CRM Subscribers
+          </button>
+        </li>
+      </ul>
+      
+      <div class="sidebar-footer">
+        <button class="admin-logout-btn" id="logoutBtn">
+          <i data-feather="log-out"></i> Lock Console
+        </button>
       </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+      
+      <!-- 1. STATS PANEL -->
+      <section class="admin-panel-section active" id="tab-stats">
+        <div class="section-topbar">
+          <h1><i data-feather="bar-chart-2" style="width: 28px; height: 28px;"></i> Performance Metrics</h1>
+        </div>
+        
+        <div class="admin-card">
+          <form id="statsForm">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="statGPA">Accumulated GPA</label>
+                <input type="text" id="statGPA" placeholder="3.94" required />
+              </div>
+              <div class="form-group">
+                <label for="statRank">Class Rank Badge</label>
+                <input type="text" id="statRank" placeholder="3rd" required />
+              </div>
+            </div>
+            <div class="form-group" style="margin-top: 24px; margin-bottom: 32px;">
+              <label for="statCount">Total Finished Projects</label>
+              <input type="number" id="statCount" placeholder="6" required />
+            </div>
+            <button type="submit" class="btn-primary-custom" style="padding: 12px 24px;">
+              <span><i data-feather="save" style="margin-right: 8px;"></i> Update Statistics</span>
+            </button>
+          </form>
+        </div>
+      </section>
 
       <!-- 2. PROJECTS PANEL -->
-      <div class="admin-panel-section" id="tab-projects">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.3rem;">Project Registry Inventory</h2>
-          <button class="btn-primary-custom" style="padding: 10px 20px; font-size: 0.8rem; min-height: 38px;" id="addProjectBtn">
-            <span>+ Add New Project</span>
+      <section class="admin-panel-section" id="tab-projects">
+        <div class="section-topbar">
+          <h1><i data-feather="folder" style="width: 28px; height: 28px;"></i> Project Registry</h1>
+          <button class="btn-primary-custom" id="addProjectBtn">
+            <span><i data-feather="plus"></i> Add New</span>
           </button>
         </div>
 
-        <!-- Add/Edit Project Form (Hidden initially) -->
-        <div class="hide" id="projectFormContainer" style="margin-bottom: 36px; padding: 28px; background: rgba(0,0,0,0.15); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
-          <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 20px;" id="projectFormTitle">Add New Project Card</h3>
+        <!-- Add/Edit Project Form -->
+        <div class="admin-card hide" id="projectFormContainer" style="border: 1px solid var(--accent-primary);">
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; margin-bottom: 24px;" id="projectFormTitle">Add New Project</h2>
           <form id="projectForm">
             <input type="hidden" id="projectId" />
-            <div class="form-group">
-              <label for="projTitle">Title</label>
+            <div class="form-group" style="margin-bottom: 24px;">
+              <label for="projTitle">Project Title</label>
               <input type="text" id="projTitle" placeholder="e.g. Smart Nurse Robot" required />
             </div>
-            <div class="form-group">
-              <label for="projDesc">Description</label>
-              <textarea id="projDesc" placeholder="Describe the technical details, protocols, and stack..." required></textarea>
+            <div class="form-group" style="margin-bottom: 24px;">
+              <label for="projDesc">Detailed Description</label>
+              <textarea id="projDesc" style="min-height: 100px;" placeholder="Describe technical details, protocols..." required></textarea>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-grid-2" style="margin-bottom: 24px;">
               <div class="form-group">
-                <label for="projCategory">Category Classification</label>
-                <select id="projCategory" style="width: 100%; padding: 13px 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); color: var(--text-primary); outline: none;" required>
-                  <option value="embedded" style="background: var(--bg-secondary);">Embedded/Hardware</option>
-                  <option value="software" style="background: var(--bg-secondary);">Software/C++</option>
-                  <option value="design" style="background: var(--bg-secondary);">Design/Research</option>
+                <label for="projCategory">Category</label>
+                <select id="projCategory" required>
+                  <option value="embedded" style="background: var(--bg-primary);">Embedded/Hardware</option>
+                  <option value="software" style="background: var(--bg-primary);">Software/C++</option>
+                  <option value="design" style="background: var(--bg-primary);">Design/Research</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="projYear">Year Created</label>
-                <input type="text" id="projYear" placeholder="e.g. 2026" required />
+                <label for="projYear">Year</label>
+                <input type="text" id="projYear" placeholder="2026" required />
               </div>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-grid-2" style="margin-bottom: 24px;">
               <div class="form-group">
-                <label for="projIcon">Emoji Icon</label>
-                <input type="text" id="projIcon" placeholder="e.g. 🤖" required />
+                <label for="projIcon">Feather Icon Name</label>
+                <input type="text" id="projIcon" placeholder="e.g. cpu, server, globe" required />
+                <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 6px;">Search on <a href="https://feathericons.com/" target="_blank" style="color: var(--accent-primary);">feathericons.com</a></span>
               </div>
               <div class="form-group">
-                <label for="projRepo">GitHub Repo URL (Optional)</label>
-                <input type="url" id="projRepo" placeholder="https://github.com/fady111-f/robot" />
+                <label for="projRepo">GitHub URL (Optional)</label>
+                <input type="url" id="projRepo" placeholder="https://github.com/..." />
               </div>
             </div>
-            <div class="form-group" style="margin-bottom: 28px;">
-              <label for="projTags">Skill Tags (Comma separated list)</label>
-              <input type="text" id="projTags" placeholder="e.g. ARM Assembly, STM32, I2C, Bluetooth" required />
+            <div class="form-group" style="margin-bottom: 32px;">
+              <label for="projTags">Tags (Comma Separated)</label>
+              <input type="text" id="projTags" placeholder="STM32, I2C, Python" required />
             </div>
-            <div style="display: flex; gap: 12px;">
+            <div style="display: flex; gap: 16px;">
               <button type="submit" class="btn-primary-custom">
-                <span id="projSubmitBtnText">Save Project</span>
+                <span id="projSubmitBtnText"><i data-feather="check"></i> Save Project</span>
               </button>
-              <button type="button" class="btn-outline-custom" style="min-height: 46px;" id="cancelProjectBtn">Cancel</button>
+              <button type="button" class="btn-outline-custom" id="cancelProjectBtn">Cancel</button>
             </div>
           </form>
         </div>
 
-        <!-- Projects Data Grid -->
-        <div class="data-table-wrapper">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Icon</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Year</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="projectsTableBody">
-              <tr>
-                <td colspan="5" style="text-align: center; color: var(--text-muted);">Syncing with Google Cloud...</td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- Data Grid -->
+        <div class="admin-card" style="padding: 0; overflow: hidden;">
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">Icon</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Year</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projectsTableBody">
+                <tr class="skeleton-row">
+                  <td>Loading</td>
+                  <td>Syncing with Cloud...</td>
+                  <td>Please wait</td>
+                  <td>...</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </section>
 
       <!-- 3. SKILLS PANEL -->
-      <div class="admin-panel-section" id="tab-skills">
-        <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; margin-bottom: 24px;">Manage Technical Arsenal Inventory</h2>
-        <form id="skillsForm">
-          <!-- Programming Languages Category -->
-          <div class="form-group" style="margin-bottom: 24px;">
-            <label for="skillsLanguages">Programming Languages (Comma separated)</label>
-            <textarea id="skillsLanguages" style="min-height: 80px;" required></textarea>
-          </div>
-          
-          <!-- Tools & Platforms Category -->
-          <div class="form-group" style="margin-bottom: 24px;">
-            <label for="skillsTools">Tools &amp; Platforms (Comma separated)</label>
-            <textarea id="skillsTools" style="min-height: 80px;" required></textarea>
-          </div>
-          
-          <!-- Soft Skills Category -->
-          <div class="form-group" style="margin-bottom: 32px;">
-            <label for="skillsSoft">Soft Skills &amp; Languages (Comma separated)</label>
-            <textarea id="skillsSoft" style="min-height: 80px;" required></textarea>
-          </div>
-          
-          <button type="submit" class="btn-primary-custom">
-            <span>Update Technical Arsenal</span>
-          </button>
-        </form>
-      </div>
+      <section class="admin-panel-section" id="tab-skills">
+        <div class="section-topbar">
+          <h1><i data-feather="cpu" style="width: 28px; height: 28px;"></i> Technical Arsenal</h1>
+        </div>
 
-      <!-- 4. CRM SUBSCRIBERS PANEL -->
-      <div class="admin-panel-section" id="tab-subscribers">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.3rem;">Newsletter CRM Subscriber List</h2>
-          <button class="btn-outline-custom" style="min-height: 38px; font-size: 0.8rem; padding: 10px 20px;" id="exportSubscribersBtn">
-            <span>Export database as JSON</span>
+        <div class="admin-card">
+          <form id="skillsForm">
+            <div class="form-group" style="margin-bottom: 28px;">
+              <label for="skillsLanguages">Programming Languages</label>
+              <textarea id="skillsLanguages" style="min-height: 80px;" placeholder="C, C++, Python..." required></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom: 28px;">
+              <label for="skillsTools">Tools & Platforms</label>
+              <textarea id="skillsTools" style="min-height: 80px;" placeholder="VS Code, Git..." required></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom: 32px;">
+              <label for="skillsSoft">Soft Skills</label>
+              <textarea id="skillsSoft" style="min-height: 80px;" placeholder="Leadership, Teamwork..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary-custom" style="padding: 12px 24px;">
+              <span><i data-feather="save" style="margin-right: 8px;"></i> Save Arsenal</span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- 4. SUBSCRIBERS PANEL -->
+      <section class="admin-panel-section" id="tab-subscribers">
+        <div class="section-topbar">
+          <h1><i data-feather="users" style="width: 28px; height: 28px;"></i> Newsletter CRM</h1>
+          <button class="btn-outline-custom" id="exportSubscribersBtn">
+            <i data-feather="download" style="margin-right: 6px;"></i> Export JSON
           </button>
         </div>
 
-        <div class="data-table-wrapper">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Email Subscriber Address</th>
-                <th>Subscription Date &amp; Time</th>
-              </tr>
-            </thead>
-            <tbody id="subscribersTableBody">
-              <tr>
-                <td colspan="2" style="text-align: center; color: var(--text-muted);">Syncing subscriber CRM...</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="admin-card" style="padding: 0; overflow: hidden;">
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Subscriber Email Address</th>
+                  <th style="text-align: right;">Joined At</th>
+                </tr>
+              </thead>
+              <tbody id="subscribersTableBody">
+                <tr class="skeleton-row">
+                  <td>Syncing CRM...</td>
+                  <td style="text-align: right;">Please wait</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </section>
 
-    </div>
+    </main>
   </div>
 
-  <!-- Click Copy Clipboard Notification Popup -->
-  <div class="copy-toast" id="copyToast">Saved successfully!</div>
-
-  <!-- Firebase CDN libraries -->
+  <!-- CDNs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
-  <!-- Hook administrative core logic -->
+  <script>
+    // Initialize Feather Icons early
+    feather.replace();
+  </script>
+  
+  <!-- Core Logic -->
   <script src="admin.js"></script>
 </body>
 </html>

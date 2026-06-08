@@ -1,15 +1,14 @@
 /**
  * ============================================================================
- * FADY FAWZY PORTFOLIO - ADMINISTRATIVE ENGINE (admin.js)
+ * FADY FAWZY PORTFOLIO - PREMIUM ADMINISTRATIVE ENGINE (admin.js)
  * ============================================================================
  * Purpose: Operates the Google Firebase Auth state loops, secure database 
  * writing (CRUD) pipelines, newsletter subscribers exports, and tab controllers.
+ * Enhanced with SweetAlert2 notifications and Feather Icons.
  * ============================================================================
  */
 
 // ===== FIREBASE CONFIGURATION =====
-// Note for developer/AI: Replace these credentials with Fady's active Firebase dashboard parameters.
-// Once set, this binds the admin dashboard directly to your live Firebase backend.
 const firebaseConfig = {
   apiKey: "AIzaSyBVsh0PHmIh_jJQR71UhY0iFvDRNsoO17k",
   authDomain: "fady-portfolio-d955b.firebaseapp.com",
@@ -34,7 +33,7 @@ if (firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith("PLACEHOLDER") &&
     console.error("Admin Firebase initialization failed: ", error);
   }
 } else {
-  alert("⚠️ Firebase placeholder active. Please configure your firebaseConfig in admin.js to enable the dynamic features!");
+  Swal.fire('Warning', 'Firebase placeholder active. Please configure your firebaseConfig in admin.js to enable dynamic features!', 'warning');
 }
 
 // ===== DOM ELEMENT CACHE =====
@@ -44,18 +43,27 @@ const loginForm = document.getElementById('loginForm');
 const adminEmailInput = document.getElementById('adminEmail');
 const adminPasswordInput = document.getElementById('adminPassword');
 const logoutBtn = document.getElementById('logoutBtn');
-const copyToast = document.getElementById('copyToast');
 
 // Database caching variables
 let loadedProjects = {};
 let loadedSubscribers = [];
 
+// SweetAlert2 Toast Configuration
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  background: 'rgba(20, 20, 25, 0.95)',
+  color: '#fff',
+  iconColor: '#6c63ff'
+});
+
 // ===== SECURE AUTHENTICATION STATE TRACKER =====
 if (isFirebaseEnabled) {
-  // Binds an active auth listener that manages visibility between login and dashboard screens
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      console.log("Authenticated administrator active: ", user.email);
       loginWrapper.classList.add('hide');
       dashboardWrapper.classList.remove('hide');
       
@@ -64,8 +72,10 @@ if (isFirebaseEnabled) {
       loadProjectsData();
       loadSkillsData();
       loadSubscribersData();
+      
+      // Initial render for icons
+      if(typeof feather !== 'undefined') feather.replace();
     } else {
-      console.log("No authenticated credentials found. Redirecting to login console.");
       loginWrapper.classList.remove('hide');
       dashboardWrapper.classList.add('hide');
     }
@@ -76,7 +86,7 @@ if (isFirebaseEnabled) {
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (!isFirebaseEnabled) {
-    showToast("Firebase Config Missing ❌");
+    Toast.fire({ icon: 'error', title: 'Firebase Config Missing' });
     return;
   }
 
@@ -84,19 +94,21 @@ loginForm.addEventListener('submit', async (e) => {
   const password = adminPasswordInput.value.trim();
 
   const submitBtn = loginForm.querySelector('button[type="submit"]');
+  const originalHtml = submitBtn.innerHTML;
   submitBtn.innerHTML = '<span>Verifying...</span>';
   submitBtn.style.pointerEvents = 'none';
 
   try {
     await firebase.auth().signInWithEmailAndPassword(email, password);
-    showToast("Console Unlocked! 🔑", true);
+    Toast.fire({ icon: 'success', title: 'Console Unlocked!' });
     loginForm.reset();
   } catch (error) {
     console.error("Login verification failed: ", error);
-    alert("❌ Error: " + error.message);
+    Swal.fire('Authentication Failed', error.message, 'error');
   } finally {
-    submitBtn.innerHTML = '<span>Unlock Dashboard</span>';
+    submitBtn.innerHTML = originalHtml;
     submitBtn.style.pointerEvents = '';
+    if(typeof feather !== 'undefined') feather.replace();
   }
 });
 
@@ -105,9 +117,10 @@ logoutBtn.addEventListener('click', async () => {
   if (!isFirebaseEnabled) return;
   try {
     await firebase.auth().signOut();
-    showToast("Console Locked successfully! 🔒");
+    Toast.fire({ icon: 'success', title: 'Console Locked Successfully!' });
   } catch (error) {
     console.error("Error signing out: ", error);
+    Swal.fire('Error', 'Failed to lock console.', 'error');
   }
 });
 
@@ -124,7 +137,13 @@ tabButtons.forEach(btn => {
     // Activate selected tab
     btn.classList.add('active');
     const tabName = btn.getAttribute('data-tab');
-    document.getElementById(`tab-${tabName}`).classList.add('active');
+    const section = document.getElementById(`tab-${tabName}`);
+    section.classList.add('active');
+    
+    // Re-trigger animation by re-inserting the element
+    section.style.animation = 'none';
+    section.offsetHeight; /* trigger reflow */
+    section.style.animation = null; 
   });
 });
 
@@ -154,8 +173,10 @@ statsForm.addEventListener('submit', async (e) => {
   if (!isFirebaseEnabled || !db) return;
 
   const submitBtn = statsForm.querySelector('button[type="submit"]');
-  submitBtn.innerHTML = '<span>Saving...</span>';
+  const originalHtml = submitBtn.innerHTML;
+  submitBtn.innerHTML = '<span><i data-feather="loader" class="spin"></i> Saving...</span>';
   submitBtn.style.pointerEvents = 'none';
+  if(typeof feather !== 'undefined') feather.replace();
 
   try {
     await db.collection("stats").doc("summary").set({
@@ -163,13 +184,14 @@ statsForm.addEventListener('submit', async (e) => {
       rank: statRank.value.trim(),
       projectsCount: parseInt(statCount.value)
     });
-    showToast("Stats Updated! 📈", true);
+    Toast.fire({ icon: 'success', title: 'Statistics Updated Successfully' });
   } catch (error) {
     console.error("Error writing stats database: ", error);
-    alert("❌ Error: Failed to write to Firestore database.");
+    Swal.fire('Update Failed', 'Failed to write to Firestore database.', 'error');
   } finally {
-    submitBtn.innerHTML = '<span>Update Statistics</span>';
+    submitBtn.innerHTML = originalHtml;
     submitBtn.style.pointerEvents = '';
+    if(typeof feather !== 'undefined') feather.replace();
   }
 });
 
@@ -200,7 +222,7 @@ async function loadProjectsData() {
     loadedProjects = {};
 
     if (snapshot.empty) {
-      projectsTableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No projects found in database. Click '+ Add New Project' to start!</td></tr>`;
+      projectsTableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No projects found in database. Click '+ Add New' to start!</td></tr>`;
       return;
     }
 
@@ -209,19 +231,25 @@ async function loadProjectsData() {
       const id = doc.id;
       loadedProjects[id] = data;
 
+      const iconMarkup = `<i data-feather="${data.icon || 'folder'}" style="width:20px; height:20px; color: var(--accent-primary);"></i>`;
+      
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td style="font-size: 1.5rem;">${data.icon || '💻'}</td>
-        <td style="font-weight: 700; color: var(--text-primary);">${data.title}</td>
+        <td style="text-align: center;">${iconMarkup}</td>
+        <td style="font-weight: 600; color: var(--text-primary);">${data.title}</td>
         <td><span class="project-tag" style="text-transform: uppercase; font-size: 0.65rem;">${data.category}</span></td>
-        <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">${data.year}</td>
-        <td>
-          <button class="action-badge badge-edit" onclick="editProject('${id}')">Edit</button>
-          <button class="action-badge badge-delete" onclick="deleteProject('${id}')">Delete</button>
+        <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-secondary);">${data.year}</td>
+        <td style="text-align: right;">
+          <button class="action-badge badge-edit" onclick="editProject('${id}')"><i data-feather="edit-2" style="width:12px; height:12px;"></i> Edit</button>
+          <button class="action-badge badge-delete" onclick="deleteProject('${id}')"><i data-feather="trash-2" style="width:12px; height:12px;"></i> Delete</button>
         </td>
       `;
       projectsTableBody.appendChild(tr);
     });
+    
+    // Initialize icons in the new rows
+    if(typeof feather !== 'undefined') feather.replace();
+    
   } catch (error) {
     console.error("Error loading projects database: ", error);
   }
@@ -231,10 +259,11 @@ async function loadProjectsData() {
 addProjectBtn.addEventListener('click', () => {
   projectForm.reset();
   projectIdInput.value = "";
-  projectFormTitle.textContent = "Add New Project Card";
-  projSubmitBtnText.textContent = "Save Project";
+  projectFormTitle.textContent = "Add New Project";
+  projSubmitBtnText.innerHTML = '<i data-feather="check"></i> Save Project';
   projectFormContainer.classList.remove('hide');
   projectFormContainer.scrollIntoView({ behavior: 'smooth' });
+  if(typeof feather !== 'undefined') feather.replace();
 });
 
 // Close Project Form
@@ -256,35 +285,35 @@ projectForm.addEventListener('submit', async (e) => {
     description: projDescInput.value.trim(),
     category: projCategoryInput.value,
     year: projYearInput.value.trim(),
-    icon: projIconInput.value.trim() || "💻",
+    icon: projIconInput.value.trim() || "folder",
     repoLink: projRepoInput.value.trim() || "",
     tags: tagsArray
   };
 
   const submitBtn = projectForm.querySelector('button[type="submit"]');
-  submitBtn.innerHTML = '<span>Saving...</span>';
+  submitBtn.innerHTML = '<span><i data-feather="loader" class="spin"></i> Saving...</span>';
   submitBtn.style.pointerEvents = 'none';
+  if(typeof feather !== 'undefined') feather.replace();
 
   try {
     if (id) {
-      // Update Mode
       await db.collection("projects").doc(id).update(payload);
-      showToast("Project Updated! 📁", true);
+      Toast.fire({ icon: 'success', title: 'Project Updated Successfully' });
     } else {
-      // Create Mode
       await db.collection("projects").add(payload);
-      showToast("Project Created! 🚀", true);
+      Toast.fire({ icon: 'success', title: 'Project Created Successfully' });
     }
 
     projectFormContainer.classList.add('hide');
     projectForm.reset();
-    loadProjectsData(); // Refresh list
+    loadProjectsData(); 
   } catch (error) {
     console.error("Error writing projects database: ", error);
-    alert("❌ Error: Failed to save project details.");
+    Swal.fire('Error', 'Failed to save project details.', 'error');
   } finally {
-    submitBtn.innerHTML = `<span>${id ? 'Save Project' : 'Save Project'}</span>`;
+    submitBtn.innerHTML = `<span><i data-feather="check"></i> ${id ? 'Update Project' : 'Save Project'}</span>`;
     submitBtn.style.pointerEvents = '';
+    if(typeof feather !== 'undefined') feather.replace();
   }
 });
 
@@ -298,14 +327,15 @@ window.editProject = function(id) {
   projDescInput.value = project.description || "";
   projCategoryInput.value = project.category || "embedded";
   projYearInput.value = project.year || "";
-  projIconInput.value = project.icon || "💻";
+  projIconInput.value = project.icon || "folder";
   projRepoInput.value = project.repoLink || "";
   projTagsInput.value = (project.tags || []).join(', ');
 
-  projectFormTitle.textContent = "Edit Project Card Details";
-  projSubmitBtnText.textContent = "Update Details";
+  projectFormTitle.textContent = "Edit Project Details";
+  projSubmitBtnText.innerHTML = '<i data-feather="check"></i> Update Project';
   projectFormContainer.classList.remove('hide');
   projectFormContainer.scrollIntoView({ behavior: 'smooth' });
+  if(typeof feather !== 'undefined') feather.replace();
 };
 
 // Delete Project Document
@@ -313,13 +343,23 @@ window.deleteProject = async function(id) {
   const project = loadedProjects[id];
   if (!project) return;
 
-  if (confirm(`⚠️ Are you absolutely sure you want to delete the project: "${project.title}"?`)) {
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: `You are about to delete "${project.title}". This cannot be undone!`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'Cancel'
+  });
+
+  if (result.isConfirmed) {
     try {
       await db.collection("projects").doc(id).delete();
-      showToast("Project Deleted! 🗑️");
-      loadProjectsData(); // Refresh list
+      Swal.fire('Deleted!', 'The project has been deleted.', 'success');
+      loadProjectsData(); 
     } catch (error) {
       console.error("Error deleting project: ", error);
+      Swal.fire('Error', 'Failed to delete the project.', 'error');
     }
   }
 };
@@ -359,21 +399,23 @@ skillsForm.addEventListener('submit', async (e) => {
   const softList = skillsSoft.value.split(',').map(s => s.trim()).filter(s => s.length > 0);
 
   const submitBtn = skillsForm.querySelector('button[type="submit"]');
-  submitBtn.innerHTML = '<span>Saving...</span>';
+  const originalHtml = submitBtn.innerHTML;
+  submitBtn.innerHTML = '<span><i data-feather="loader" class="spin"></i> Saving...</span>';
   submitBtn.style.pointerEvents = 'none';
+  if(typeof feather !== 'undefined') feather.replace();
 
   try {
-    // Write the 3 skill category documents
     await db.collection("skills").doc("languages").set({ category: "languages", list: languagesList });
     await db.collection("skills").doc("tools").set({ category: "tools", list: toolsList });
     await db.collection("skills").doc("soft").set({ category: "soft", list: softList });
-    showToast("Skills Synchronized! ⚡", true);
+    Toast.fire({ icon: 'success', title: 'Arsenal Synchronized Successfully' });
   } catch (error) {
     console.error("Error writing skills database: ", error);
-    alert("❌ Error: Failed to write skills catalog.");
+    Swal.fire('Error', 'Failed to write skills catalog.', 'error');
   } finally {
-    submitBtn.innerHTML = '<span>Update Technical Arsenal</span>';
+    submitBtn.innerHTML = originalHtml;
     submitBtn.style.pointerEvents = '';
+    if(typeof feather !== 'undefined') feather.replace();
   }
 });
 
@@ -399,7 +441,6 @@ async function loadSubscribersData() {
       let timestampText = "Offline Local Record";
 
       if (data.timestamp) {
-        // Formspree server timestamp fallback compatibility
         const seconds = data.timestamp.seconds || Math.floor(new Date(data.timestamp).getTime() / 1000);
         timestampText = new Date(seconds * 1000).toLocaleString();
       }
@@ -409,7 +450,7 @@ async function loadSubscribersData() {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--accent-tertiary);">${email}</td>
-        <td style="color: var(--text-secondary); font-size: 0.8rem;">📅 ${timestampText}</td>
+        <td style="text-align: right; color: var(--text-secondary); font-size: 0.8rem;">${timestampText}</td>
       `;
       subscribersTableBody.appendChild(tr);
     });
@@ -421,37 +462,17 @@ async function loadSubscribersData() {
 // Export Subscribers List as JSON file download
 exportSubscribersBtn.addEventListener('click', () => {
   if (loadedSubscribers.length === 0) {
-    alert("❌ No subscriber data available for export.");
+    Swal.fire('Export Failed', 'No subscriber data available for export.', 'info');
     return;
   }
 
   const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(loadedSubscribers, null, 2))}`;
   const downloadAnchor = document.createElement('a');
   downloadAnchor.setAttribute("href", jsonString);
-  downloadAnchor.setAttribute("download", `Subscribers_Backup_${new Date().toISOString().slice(0,10)}.json`);
+  downloadAnchor.setAttribute("download", `CRM_Export_${new Date().toISOString().slice(0,10)}.json`);
   document.body.appendChild(downloadAnchor);
   downloadAnchor.click();
   downloadAnchor.remove();
-  showToast("JSON Database Exported! 📥", true);
+  
+  Toast.fire({ icon: 'success', title: 'Database Exported Successfully' });
 });
-
-// ===== ADMINISTRATIVE UTILITY: TOAST PANEL =====
-let toastTimeout = null;
-function showToast(message, isSuccess = false) {
-  if (copyToast) {
-    copyToast.textContent = message;
-    
-    if (isSuccess) {
-      copyToast.classList.add('toast-success');
-    } else {
-      copyToast.classList.remove('toast-success');
-    }
-    
-    copyToast.classList.add('visible');
-
-    if (toastTimeout) clearTimeout(toastTimeout);
-    toastTimeout = setTimeout(() => {
-      copyToast.classList.remove('visible');
-    }, 2500);
-  }
-}
