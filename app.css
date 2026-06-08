@@ -1173,7 +1173,7 @@ section + section::before {
     gap: 40px;
   }
 
-  .hero-visual { order: -1; overflow: hidden; }
+  .hero-visual { order: -1; overflow: visible; }
 
   /* Center section headers on tablet/mobile */
   .section-header { text-align: center; }
