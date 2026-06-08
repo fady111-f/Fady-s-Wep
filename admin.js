@@ -10,7 +10,7 @@
 
 // ===== FIREBASE CONFIGURATION =====
 const firebaseConfig = {
-  apiKey: "AIzaSyBVsh0PHmIh_jJQR71UhY0iFvDRNsoO17k",
+  apiKey: "AIzaSyBVsH0PHmIh_jJQR71UHy0iFvDRNso017k",
   authDomain: "fady-portfolio-d955b.firebaseapp.com",
   projectId: "fady-portfolio-d955b",
   storageBucket: "fady-portfolio-d955b.firebasestorage.app",
