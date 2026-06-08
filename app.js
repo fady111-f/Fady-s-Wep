@@ -919,11 +919,11 @@ async function handleNewsletterSubmit(e) {
   try {
     const response = await fetch(form.action, {
       method: form.method,
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
+      mode: 'no-cors',
+      body: new FormData(form)
     });
 
-    if (response.ok) {
+    if (response.ok || response.type === 'opaque') {
       // Local Database Persistence
       let subscribers = JSON.parse(localStorage.getItem('subscribers') || '[]');
       if (!subscribers.includes(email)) {
