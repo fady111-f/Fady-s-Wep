@@ -476,3 +476,90 @@ exportSubscribersBtn.addEventListener('click', () => {
   
   Toast.fire({ icon: 'success', title: 'Database Exported Successfully' });
 });
+
+// ===== AUTO FILL UTILITY (Temporary helper for initial setup) =====
+const autoFillBtn = document.getElementById('autoFillBtn');
+if (autoFillBtn) {
+  autoFillBtn.addEventListener('click', async () => {
+    if (!isFirebaseEnabled || !db) return;
+    
+    const result = await Swal.fire({
+      title: 'Auto-Fill Database?',
+      text: 'This will automatically push all your projects, skills, and stats from the code to Firebase. It may duplicate entries if you already added them.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Fill Data!',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.isConfirmed) {
+      Swal.fire({ title: 'Filling Database...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+      
+      try {
+        // 1. Stats
+        await db.collection("stats").doc("summary").set({
+          gpa: "3.94", rank: "3rd", projectsCount: 6
+        });
+
+        // 2. Skills
+        await db.collection("skills").doc("languages").set({ category: "languages", list: ["C", "C++", "Python", "JavaScript", "HTML", "CSS", "SQL", "Verilog", "ARM Assembly"] });
+        await db.collection("skills").doc("tools").set({ category: "tools", list: ["VS Code", "Git", "GitHub", "Keil µVision", "ModelSim", "AutoCAD", "Power BI"] });
+        await db.collection("skills").doc("soft").set({ category: "soft", list: ["Leadership", "Adaptability", "Teamwork", "Communication", "Problem Solving", "Arabic (Native)", "English (Very Good)"] });
+
+        // 3. Projects
+        const projects = [
+          {
+            title: "Smart Nurse Robot",
+            description: "Fully autonomous medical assistant robot using bare-metal ARM Thumb-2 Assembly on STM32 without HAL libraries. Integrated I2C, SPI, UART, ADC, PWM, Bluetooth, RFID, and ultrasonic navigation. Real-time monitoring of Heart Rate, SpO2, IV drop-rate, and pressure sensing with a custom TFT dashboard.",
+            category: "embedded", year: "2026", icon: "cpu", repoLink: "https://github.com/fady111-f", tags: ["ARM Assembly", "STM32", "I2C / SPI", "Bluetooth", "RFID"]
+          },
+          {
+            title: "Flowchart Designer & Simulator",
+            description: "Complete flowchart designer and simulator in C++ without UI frameworks. Implemented copy/paste, undo/redo, validation, and automated C++ code generation features for visual algorithm design.",
+            category: "software", year: "2025", icon: "pen-tool", repoLink: "https://github.com/fady111-f", tags: ["C++", "Graphics", "Code Gen"]
+          },
+          {
+            title: "Restaurant Management System",
+            description: "Restaurant order management simulation system for dine-in, takeaway, and delivery orders. Features dynamic assignment algorithms for chefs, tables, and delivery scooters.",
+            category: "software", year: "2026", icon: "coffee", repoLink: "https://github.com/fady111-f", tags: ["C++", "Algorithms", "Simulation"]
+          },
+          {
+            title: "FPGA ALU Logic Design",
+            description: "Designed and implemented an Arithmetic Logic Unit (ALU) using Verilog. Supported arithmetic operations, BCD-to-excess-3 conversion, and FPGA-based sequential logic. Simulated and verified on a DE1-SoC FPGA board using ModelSim.",
+            category: "embedded", year: "2025", icon: "zap", repoLink: "", tags: ["Verilog", "FPGA", "DE1-SoC", "ModelSim"]
+          },
+          {
+            title: "Innovative Lampshade Project",
+            description: "Led a team in designing and building a recyclable PVC-based decorative lampshade. Applied sustainable design principles using reused materials. Received 3rd place and was selected as a showcase model by the department head.",
+            category: "design", year: "2026", icon: "sun", repoLink: "", tags: ["Design", "Sustainability", "Leadership"]
+          },
+          {
+            title: "SDG 9 — Industry & Innovation",
+            description: "Led a team to research and present Sustainable Development Goal 9. Prepared presentation materials and coordinated public speaking tasks. Received excellent feedback for presentation quality and teamwork.",
+            category: "design", year: "2025", icon: "globe", repoLink: "", tags: ["Research", "Presentation", "SDG"]
+          }
+        ];
+
+        // First, optionally clear existing projects (optional, but safe to avoid duplicates if they click multiple times)
+        const snapshot = await db.collection("projects").get();
+        const batch = db.batch();
+        snapshot.docs.forEach((doc) => { batch.delete(doc.ref); });
+        await batch.commit();
+
+        for (let p of projects) {
+          await db.collection("projects").add(p);
+        }
+
+        // Reload data
+        loadStatsData();
+        loadSkillsData();
+        loadProjectsData();
+
+        Swal.fire('Success!', 'All your hardcoded data has been uploaded to Firebase automatically.', 'success');
+      } catch (error) {
+        console.error("Auto-Fill Error:", error);
+        Swal.fire('Error', 'Failed to upload data.', 'error');
+      }
+    }
+  });
+}
