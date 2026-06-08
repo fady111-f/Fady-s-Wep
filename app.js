@@ -254,7 +254,7 @@ revealElements.forEach(el => revealObserver.observe(el));
 // Performance: requestAnimationFrame keeps DOM reflows synchronized with GPU monitor cycles.
 // Note: A second dynamic counter observer is implemented at line 728 for generic data elements.
 function animateCounters() {
-  const counters = document.querySelectorAll('.stat-number[data-count]');
+  const counters = document.querySelectorAll('[data-count]');
 
   counters.forEach(counter => {
     const target = parseFloat(counter.getAttribute('data-count'));
@@ -1045,22 +1045,24 @@ async function syncPortfolioData() {
     if (statsDoc.exists) {
       const statsData = statsDoc.data();
       const gpaEl = document.querySelector('.hero-stats .stat-item:nth-child(1) .stat-number');
+      const badgeGpaEl = document.querySelector('.badge-gpa .badge-value');
       const rankEl = document.querySelector('.hero-stats .stat-item:nth-child(2) .stat-number');
       const countEl = document.querySelector('.hero-stats .stat-item:nth-child(3) .stat-number');
 
-      if (statsData.gpa && gpaEl) {
-        gpaEl.setAttribute('data-count', statsData.gpa);
-        gpaEl.textContent = statsData.gpa;
+      if (statsData.gpa) {
+        if (gpaEl) { gpaEl.setAttribute('data-count', statsData.gpa); gpaEl.textContent = '0'; }
+        if (badgeGpaEl) { badgeGpaEl.setAttribute('data-count', statsData.gpa); badgeGpaEl.textContent = '0'; }
       }
       if (statsData.rank && rankEl) {
         rankEl.textContent = statsData.rank;
       }
       if (statsData.projectsCount && countEl) {
         countEl.setAttribute('data-count', statsData.projectsCount);
-        countEl.textContent = statsData.projectsCount;
+        countEl.textContent = '0';
       }
 
-      // Counter animations are handled by the IntersectionObserver
+      // Re-trigger animations so the new values count up beautifully
+      animateCounters();
     }
 
     // 2. Sync Dynamic Skills
