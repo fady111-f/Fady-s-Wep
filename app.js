@@ -21,15 +21,7 @@
 // Note for developer/AI: Replace these credentials with Fady's active Firebase dashboard parameters.
 // If config is left empty or is incomplete, the system triggers 'Resiliency Fallback',
 // rendering hardcoded static content seamlessly so there is 0% downtime!
-const firebaseConfig = {
-  apiKey: "AIzaSyBVsh0PHmIh_jJQR71UhY0iFvDRNsoO17k",
-  authDomain: "fady-portfolio-d955b.firebaseapp.com",
-  projectId: "fady-portfolio-d955b",
-  storageBucket: "fady-portfolio-d955b.firebasestorage.app",
-  messagingSenderId: "229272230743",
-  appId: "1:229272230743:web:e8d8cb0d60f968fb5d7c12",
-  measurementId: "G-H2BK6F8MXV"
-};
+// firebaseConfig is now loaded globally from firebase-config.js
 
 let db = null;
 let isFirebaseEnabled = false;
@@ -390,27 +382,7 @@ function initProjectCardsTilt() {
 initProjectCardsTilt();
 
 // ===== MAGNETIC EFFECT ON BUTTONS =====
-// DISABLED: Magnetic pull effect has been disabled to keep buttons fixed in place.
-// Creates a 'magnetic pull' feel on primary actions when mouse approaches inside.
-// Math details:
-// - Calculate mouse offset vector from button's exact center.
-// - Scale displacement by 0.14 (pull target by 14% of absolute cursor distance).
-// - Exiting mouse resets the displacement smoothly.
-const magneticBtns = document.querySelectorAll('.btn-primary-custom, .btn-outline-custom');
-
-magneticBtns.forEach(btn => {
-  btn.addEventListener('mousemove', (e) => {
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-
-    btn.style.transform = `translate(${x * 0.14}px, ${y * 0.14}px)`;
-  });
-
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = '';
-  });
-});
+// Fully removed to optimize performance and battery life.
 
 // ===== DEVELOPER TERMINAL (EASTER EGG) =====
 let typedSequence = '';
