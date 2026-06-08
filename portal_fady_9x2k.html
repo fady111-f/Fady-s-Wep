@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    // URL Gate Security - Restrict access to GitHub Pages static admin file
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('key') !== 'fady2026') {
+      window.location.replace('index.html');
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">

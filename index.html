@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- 
     ===========================================================================
@@ -20,15 +21,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0A0F1C" />
-  
+
   <!-- Strict SEO Metadata -->
   <title>Fady Fawzy — Computer Engineering Student & Developer</title>
   <link rel="canonical" href="https://YOUR_DOMAIN/" /> <!-- TODO: Replace YOUR_DOMAIN with your deployed URL -->
-  <meta name="description" content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI. GPA 3.94, ranked 3rd." />
-  
+  <meta name="description"
+    content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI. GPA 3.94, ranked 3rd." />
+
   <!-- Open Graph / Social Sharing Meta Tags (Rich snippets when sharing link) -->
   <meta property="og:title" content="Fady Fawzy — Computer Engineering Student &amp; Developer" />
-  <meta property="og:description" content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI." />
+  <meta property="og:description"
+    content="Portfolio of Fady Fawzy Youssef — Computer Engineering student at Cairo University specializing in embedded systems, web development, and AI." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://YOUR_DOMAIN/" /> <!-- TODO: Replace YOUR_DOMAIN -->
   <meta property="og:image" content="https://YOUR_DOMAIN/logo.png" /> <!-- TODO: Replace YOUR_DOMAIN -->
@@ -37,16 +40,19 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="apple-touch-icon" href="logo.png">
-  
+
   <!-- Stylesheets (styles.css holds design system, navbar, hero; app.css holds components, responsive grids) -->
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="app.css" />
-  
+
   <!-- Google Fonts Preconnect Connections (Improves load times for premium typography) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
   <!-- 
     ===========================================================================
@@ -61,7 +67,8 @@
   </div>
 
   <!-- Scroll Progress Indicator (Thin horizontal indicator bar mapped on screen top) -->
-  <div class="scroll-progress" id="scrollProgress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="scroll-progress" id="scrollProgress" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+    aria-valuemax="100"></div>
 
   <!-- Interactive Particle Physics Canvas (Renders connecting nodes on requestAnimationFrame) -->
   <canvas id="particleCanvas"></canvas>
@@ -83,8 +90,9 @@
   <nav class="navbar" id="navbar">
     <div class="container">
       <!-- Logo redirects to top coordinates -->
-      <a href="#hero" class="nav-logo" aria-label="Fady Fawzy Home"><img src="favicon.svg" alt="FF Logo" class="nav-logo-img"></a>
-      
+      <a href="#hero" class="nav-logo" aria-label="Fady Fawzy Home"><img src="favicon.svg" alt="FF Logo"
+          class="nav-logo-img"></a>
+
       <!-- Primary Links Panel (Full screen overlay on mobile) -->
       <ul class="nav-links" id="navLinks">
         <li><a href="#about" class="nav-link">About</a></li>
@@ -93,10 +101,12 @@
         <li><a href="#experience" class="nav-link">Experience</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
         <!-- Theme Toggle Switch (Persistent state stored inside localStorage) -->
-        <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme" aria-pressed="false"><i data-feather="moon"></i></button></li>
-        <li><a href="#contact" class="btn-primary-custom" style="padding: 10px 22px; font-size: 0.82rem;"><span>Contact</span></a></li>
+        <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme" aria-pressed="false"><i
+              data-feather="moon"></i></button></li>
+        <li><a href="#contact" class="btn-primary-custom"
+            style="padding: 10px 22px; font-size: 0.82rem;"><span>Contact</span></a></li>
       </ul>
-      
+
       <!-- Hamburger Menu Trigger (Mobile layout only) -->
       <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
         <span></span>
@@ -120,19 +130,22 @@
           <!-- Text and Action Column -->
           <div class="hero-text">
             <!-- Opportunity Status Badge -->
-            <div class="hero-status-badge"><span class="hero-status-dot"></span> Open to Opportunities &amp; Collaborations</div>
+            <div class="hero-status-badge"><span class="hero-status-dot"></span> Open to Opportunities &amp;
+              Collaborations</div>
             <p class="hero-greeting">Welcome, my name is</p>
-            
+
             <!-- Main Title (data-text drives nameShimmer transition in CSS) -->
             <h1 class="hero-name" data-text="Fady Fawzy">Fady Fawzy</h1>
-            
+
             <!-- Typewriter effect updates contents here dynamically -->
             <p class="hero-title">Computer Engineering Student</p>
-            
+
             <p class="hero-description">
-              Computer Engineering student at Cairo University with strong interests in computer networks, embedded systems, web development, and artificial intelligence. Passionate about hands-on engineering projects, low-level programming, and solving real-world technical problems.
+              Computer Engineering student at Cairo University with strong interests in computer networks, embedded
+              systems, web development, and artificial intelligence. Passionate about hands-on engineering projects,
+              low-level programming, and solving real-world technical problems.
             </p>
-            
+
             <!-- Live Numeric Stats Grid (data-count triggers IntersectionObserver counting transition) -->
             <div class="hero-stats">
               <div class="stat-item reveal reveal-delay-1">
@@ -148,21 +161,23 @@
                 <div class="stat-label">Projects</div>
               </div>
             </div>
-            
+
             <!-- Call To Action Actions -->
             <div class="hero-cta">
-              <a href="#projects" class="btn-primary-custom" aria-label="View my projects"><span>View Projects</span> <span>→</span></a>
-              <a href="Fady_Fawzy_CV_2026.pdf" target="_blank" class="btn-outline-custom" download aria-label="Download my CV as PDF">Download CV</a>
+              <a href="#projects" class="btn-primary-custom" aria-label="View my projects"><span>View Projects</span>
+                <span>→</span></a>
+              <a href="Fady_Fawzy_CV_2026.pdf" target="_blank" class="btn-outline-custom" download
+                aria-label="Download my CV as PDF">Download CV</a>
             </div>
           </div>
-          
+
           <!-- Interactive Visual Avatar Column -->
           <div class="hero-visual">
             <div class="hero-avatar-wrapper">
               <!-- Glow pulse rings spinning in opposite directions -->
               <div class="hero-avatar-ring"></div>
               <div class="hero-avatar"><img src="avatar.jpg" alt="Fady Fawzy Avatar"></div>
-              
+
               <!-- Floating Badge 1 (GPA) -->
               <div class="hero-floating-badge badge-gpa">
                 <span class="badge-icon"><i data-feather="target" style="width:16px;height:16px;"></i></span>
@@ -171,7 +186,7 @@
                   <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">GPA</span>
                 </div>
               </div>
-              
+
               <!-- Floating Badge 2 (Rank) -->
               <div class="hero-floating-badge badge-rank">
                 <span class="badge-icon"><i data-feather="award" style="width:16px;height:16px;"></i></span>
@@ -183,7 +198,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Mouse Wheel Scroll Down Reminder -->
         <div class="scroll-indicator">
           <div class="mouse"></div>
@@ -205,22 +220,29 @@
           <p class="section-label">About Me</p>
           <h2 class="section-title">Professional <span class="gradient-text">Profile</span></h2>
         </div>
-        
+
         <!-- Three semantic narrative paragraphs -->
         <div class="about-content reveal">
           <p class="about-intro">
-            I'm <span class="highlight">Fady Fawzy Youssef</span>, a Computer Engineering student from Giza, Egypt, deeply passionate about programming and technology. I believe in learning with deep understanding rather than memorization, tackling every challenge with an analytical and patient mindset.
+            I'm <span class="highlight">Fady Fawzy Youssef</span>, a Computer Engineering student from Giza, Egypt,
+            deeply passionate about programming and technology. I believe in learning with deep understanding rather
+            than memorization, tackling every challenge with an analytical and patient mindset.
           </p>
-          
+
           <p class="about-journey">
-            My journey began with CS50, and I've been driven by hands-on engineering projects, low-level programming, and solving real-world technical problems through practical experience and teamwork. Ranked <span class="highlight">3rd</span> in my preparatory year with a GPA of <span class="highlight">3.94</span>, I'm constantly pushing myself to grow as an engineer.
+            My journey began with CS50, and I've been driven by hands-on engineering projects, low-level programming,
+            and solving real-world technical problems through practical experience and teamwork. Ranked <span
+              class="highlight">3rd</span> in my preparatory year with a GPA of <span class="highlight">3.94</span>, I'm
+            constantly pushing myself to grow as an engineer.
           </p>
-          
+
           <p class="about-interests">
-            My interests span across <span class="highlight">embedded systems, computer networks, web development, and AI</span> — each offering unique challenges that fuel my curiosity. Beyond coding, I love exploring new places and trying different cuisines, especially those grilled by my mother.
+            My interests span across <span class="highlight">embedded systems, computer networks, web development, and
+              AI</span> — each offering unique challenges that fuel my curiosity. Beyond coding, I love exploring new
+            places and trying different cuisines, especially those grilled by my mother.
           </p>
         </div>
-        
+
         <!-- Quick Informative Card Matrix -->
         <div class="about-cards-wrapper">
           <div class="about-info-cards">
@@ -268,19 +290,25 @@
           <p class="section-label">Education</p>
           <h2 class="section-title">Academic <span class="gradient-text">Journey</span></h2>
         </div>
-        
+
         <div class="education-card reveal">
           <div class="education-icon-wrap"><i data-feather="book" style="width:32px;height:32px;"></i></div>
           <div class="education-info">
             <h3>Cairo University, Faculty of Engineering</h3>
             <p class="edu-dept">Computer Engineering</p>
             <div class="edu-meta">
-              <span><i data-feather="calendar" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>2025 – 2029</span>
-              <span><i data-feather="map-pin" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Giza, Egypt</span>
+              <span><i data-feather="calendar"
+                  style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>2025 – 2029</span>
+              <span><i data-feather="map-pin"
+                  style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Giza, Egypt</span>
             </div>
-            <div class="edu-badge"><i data-feather="award" style="width:16px;height:16px;margin-right:8px;vertical-align:text-bottom;"></i> Ranked 3rd — GPA 3.94</div>
+            <div class="edu-badge"><i data-feather="award"
+                style="width:16px;height:16px;margin-right:8px;vertical-align:text-bottom;"></i> Ranked 3rd — GPA 3.94
+            </div>
             <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-secondary);">
-              Excelled academically, earning 97.2% in Egypt's National High School Diploma. Ranked 200th nationwide and admitted to Cairo University. Placed among the top three students, enabling transfer to the Computer Engineering department.
+              Excelled academically, earning 97.2% in Egypt's National High School Diploma. Ranked 200th nationwide and
+              admitted to Cairo University. Placed among the top three students, enabling transfer to the Computer
+              Engineering department.
             </p>
           </div>
         </div>
@@ -317,7 +345,7 @@
               <span class="skill-tag">ARM Assembly</span>
             </div>
           </div>
-          
+
           <!-- Tools & Platforms -->
           <div class="skill-category reveal reveal-delay-2">
             <div class="skill-category-icon"><i data-feather="tool"></i></div>
@@ -332,7 +360,7 @@
               <span class="skill-tag">Power BI</span>
             </div>
           </div>
-          
+
           <!-- Soft Skills & Languages -->
           <div class="skill-category reveal reveal-delay-3">
             <div class="skill-category-icon"><i data-feather="users"></i></div>
@@ -375,7 +403,9 @@
                   <p class="timeline-company">Digital Egypt Pioneers Initiative</p>
                 </div>
                 <div class="timeline-meta">
-                  <span class="timeline-date"><i data-feather="calendar" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>2025 – Present</span>
+                  <span class="timeline-date"><i data-feather="calendar"
+                      style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>2025 –
+                    Present</span>
                 </div>
               </div>
               <ul class="timeline-details">
@@ -395,8 +425,11 @@
                   <p class="timeline-company">IEEE CUSB</p>
                 </div>
                 <div class="timeline-meta">
-                  <span class="timeline-date"><i data-feather="calendar" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>2025 – Present</span>
-                  <span class="timeline-location"><i data-feather="map-pin" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Giza, Egypt</span>
+                  <span class="timeline-date"><i data-feather="calendar"
+                      style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>2025 –
+                    Present</span>
+                  <span class="timeline-location"><i data-feather="map-pin"
+                      style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Giza, Egypt</span>
                 </div>
               </div>
               <ul class="timeline-details">
@@ -416,8 +449,10 @@
                   <p class="timeline-company">TCCD Research Day — 15th Edition</p>
                 </div>
                 <div class="timeline-meta">
-                  <span class="timeline-date"><i data-feather="calendar" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>2026</span>
-                  <span class="timeline-location"><i data-feather="map-pin" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Egypt</span>
+                  <span class="timeline-date"><i data-feather="calendar"
+                      style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>2026</span>
+                  <span class="timeline-location"><i data-feather="map-pin"
+                      style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Egypt</span>
                 </div>
               </div>
               <ul class="timeline-details">
@@ -438,15 +473,19 @@
                   <p class="timeline-company">EVA Pharma</p>
                 </div>
                 <div class="timeline-meta">
-                  <span class="timeline-date"><i data-feather="calendar" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Jun 2025 – Oct 2025</span>
-                  <span class="timeline-location"><i data-feather="map-pin" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Giza, Egypt</span>
+                  <span class="timeline-date"><i data-feather="calendar"
+                      style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Jun 2025 – Oct
+                    2025</span>
+                  <span class="timeline-location"><i data-feather="map-pin"
+                      style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Giza, Egypt</span>
                 </div>
               </div>
               <ul class="timeline-details">
                 <li>Assisted engineers and technicians in electrical systems and industrial operations</li>
                 <li>Worked with backup generators, server/data panels, and electrical management tasks</li>
                 <li>Supported AutoCAD work, technical documentation, and professional email communication</li>
-                <li>Applied engineering knowledge in a real industrial environment and handled increasing responsibilities</li>
+                <li>Applied engineering knowledge in a real industrial environment and handled increasing
+                  responsibilities</li>
               </ul>
             </div>
           </div>
@@ -461,14 +500,18 @@
                   <p class="timeline-company">EVA Pharma</p>
                 </div>
                 <div class="timeline-meta">
-                  <span class="timeline-date"><i data-feather="calendar" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Summer Training</span>
-                  <span class="timeline-location"><i data-feather="map-pin" style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Giza, Egypt</span>
+                  <span class="timeline-date"><i data-feather="calendar"
+                      style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Summer
+                    Training</span>
+                  <span class="timeline-location"><i data-feather="map-pin"
+                      style="width:14px;height:14px;margin-right:4px;vertical-align:text-bottom;"></i>Giza, Egypt</span>
                 </div>
               </div>
               <ul class="timeline-details">
                 <li>Operated industrial machines independently during summer training</li>
                 <li>Gained practical experience with production systems and teamwork in industrial environments</li>
-                <li>Improved communication and problem-solving skills through collaboration with technicians and supervisors</li>
+                <li>Improved communication and problem-solving skills through collaboration with technicians and
+                  supervisors</li>
               </ul>
             </div>
           </div>
@@ -491,7 +534,7 @@
           <p class="section-label">Projects</p>
           <h2 class="section-title">Featured <span class="gradient-text">Work</span></h2>
         </div>
-        
+
         <!-- Dynamic Filter Controls -->
         <div class="project-filters reveal">
           <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
@@ -512,7 +555,9 @@
             </div>
             <h3 class="project-title">Smart Nurse Robot</h3>
             <p class="project-desc">
-              Fully autonomous medical assistant robot using bare-metal ARM Thumb-2 Assembly on STM32 without HAL libraries. Integrated I2C, SPI, UART, ADC, PWM, Bluetooth, RFID, and ultrasonic navigation. Real-time monitoring of Heart Rate, SpO2, IV drop-rate, and pressure sensing with a custom TFT dashboard.
+              Fully autonomous medical assistant robot using bare-metal ARM Thumb-2 Assembly on STM32 without HAL
+              libraries. Integrated I2C, SPI, UART, ADC, PWM, Bluetooth, RFID, and ultrasonic navigation. Real-time
+              monitoring of Heart Rate, SpO2, IV drop-rate, and pressure sensing with a custom TFT dashboard.
             </p>
             <div class="project-tags">
               <span class="project-tag">ARM Assembly</span>
@@ -535,7 +580,8 @@
             </div>
             <h3 class="project-title">Flowchart Designer & Simulator</h3>
             <p class="project-desc">
-              Complete flowchart designer and simulator in C++ without UI frameworks. Implemented copy/paste, undo/redo, validation, and automated C++ code generation features for visual algorithm design.
+              Complete flowchart designer and simulator in C++ without UI frameworks. Implemented copy/paste, undo/redo,
+              validation, and automated C++ code generation features for visual algorithm design.
             </p>
             <div class="project-tags">
               <span class="project-tag">C++</span>
@@ -556,7 +602,8 @@
             </div>
             <h3 class="project-title">Restaurant Management System</h3>
             <p class="project-desc">
-              Restaurant order management simulation system for dine-in, takeaway, and delivery orders. Features dynamic assignment algorithms for chefs, tables, and delivery scooters.
+              Restaurant order management simulation system for dine-in, takeaway, and delivery orders. Features dynamic
+              assignment algorithms for chefs, tables, and delivery scooters.
             </p>
             <div class="project-tags">
               <span class="project-tag">C++</span>
@@ -577,7 +624,9 @@
             </div>
             <h3 class="project-title">FPGA ALU Logic Design</h3>
             <p class="project-desc">
-              Designed and implemented an Arithmetic Logic Unit (ALU) using Verilog. Supported arithmetic operations, BCD-to-excess-3 conversion, and FPGA-based sequential logic. Simulated and verified on a DE1-SoC FPGA board using ModelSim.
+              Designed and implemented an Arithmetic Logic Unit (ALU) using Verilog. Supported arithmetic operations,
+              BCD-to-excess-3 conversion, and FPGA-based sequential logic. Simulated and verified on a DE1-SoC FPGA
+              board using ModelSim.
             </p>
             <div class="project-tags">
               <span class="project-tag">Verilog</span>
@@ -596,7 +645,9 @@
             </div>
             <h3 class="project-title">Innovative Lampshade Project</h3>
             <p class="project-desc">
-              Led a team in designing and building a recyclable PVC-based decorative lampshade. Applied sustainable design principles using reused materials. Received 3rd place and was selected as a showcase model by the department head.
+              Led a team in designing and building a recyclable PVC-based decorative lampshade. Applied sustainable
+              design principles using reused materials. Received 3rd place and was selected as a showcase model by the
+              department head.
             </p>
             <div class="project-tags">
               <span class="project-tag">Design</span>
@@ -614,7 +665,8 @@
             </div>
             <h3 class="project-title">SDG 9 — Industry & Innovation</h3>
             <p class="project-desc">
-              Led a team to research and present Sustainable Development Goal 9. Prepared presentation materials and coordinated public speaking tasks. Received excellent feedback for presentation quality and teamwork.
+              Led a team to research and present Sustainable Development Goal 9. Prepared presentation materials and
+              coordinated public speaking tasks. Received excellent feedback for presentation quality and teamwork.
             </p>
             <div class="project-tags">
               <span class="project-tag">Research</span>
@@ -644,18 +696,20 @@
           <!-- Information and Channels Grid -->
           <div>
             <p class="contact-info-text reveal">
-              I'm always open to new opportunities, collaborations, and interesting conversations. Whether you have a project in mind, a question, or just want to say hello — feel free to reach out!
+              I'm always open to new opportunities, collaborations, and interesting conversations. Whether you have a
+              project in mind, a question, or just want to say hello — feel free to reach out!
             </p>
             <div class="contact-links">
               <!-- Email Copy Link -->
-              <a href="mailto:fady.fawzy2006@gmail.com" class="contact-link reveal reveal-delay-1" data-copy="fady.fawzy2006@gmail.com">
+              <a href="mailto:fady.fawzy2006@gmail.com" class="contact-link reveal reveal-delay-1"
+                data-copy="fady.fawzy2006@gmail.com">
                 <div class="contact-link-icon"><i data-feather="mail"></i></div>
                 <div>
                   <div class="contact-link-label">Email</div>
                   <div class="contact-link-value">fady.fawzy2006@gmail.com</div>
                 </div>
               </a>
-              
+
               <!-- Phone Copy Link -->
               <a href="tel:+201204788242" class="contact-link reveal reveal-delay-2" data-copy="+201204788242">
                 <div class="contact-link-icon"><i data-feather="phone"></i></div>
@@ -664,16 +718,17 @@
                   <div class="contact-link-value">+20 120 478 8242</div>
                 </div>
               </a>
-              
+
               <!-- LinkedIn Link -->
-              <a href="https://www.linkedin.com/in/fady-fawzy1/" target="_blank" class="contact-link reveal reveal-delay-3">
+              <a href="https://www.linkedin.com/in/fady-fawzy1/" target="_blank"
+                class="contact-link reveal reveal-delay-3">
                 <div class="contact-link-icon"><i data-feather="linkedin"></i></div>
                 <div>
                   <div class="contact-link-label">LinkedIn</div>
                   <div class="contact-link-value">fady-fawzy</div>
                 </div>
               </a>
-              
+
               <!-- GitHub Link -->
               <a href="https://github.com/fady111-f" target="_blank" class="contact-link reveal reveal-delay-4">
                 <div class="contact-link-icon"><i data-feather="github"></i></div>
@@ -684,11 +739,12 @@
               </a>
             </div>
           </div>
-          
+
           <!-- Direct Message Form Panel (Fires handleSubmit async Fetch sequence onsubmit) -->
           <div class="contact-form reveal">
             <h3>Send a Message</h3>
-            <form id="contactForm" action="https://formspree.io/f/xaqzoldn" method="POST" onsubmit="handleSubmit(event)">
+            <form id="contactForm" action="https://formspree.io/f/xaqzoldn" method="POST"
+              onsubmit="handleSubmit(event)">
               <div class="form-group">
                 <label for="name">Your Name</label>
                 <input type="text" id="name" name="name" placeholder="John Doe" required />
@@ -699,7 +755,8 @@
               </div>
               <div class="form-group">
                 <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Tell me about your project or idea..." required></textarea>
+                <textarea id="message" name="message" placeholder="Tell me about your project or idea..."
+                  required></textarea>
               </div>
               <button type="submit" class="btn-primary-custom" style="width: 100%; justify-content: center;">
                 <span>Send Message</span> <i data-feather="send" style="width:18px;height:18px;"></i>
@@ -710,29 +767,32 @@
       </div>
     </section>
 
-  <!-- 
+    <!-- 
     ===========================================================================
     NEWSLETTER SECTION
     ===========================================================================
     A marketing card calling handleNewsletterSubmit on submit.
   -->
-  <section id="newsletter">
-    <div class="container">
-      <div class="newsletter-wrapper reveal">
-        <div class="newsletter-content">
-          <h2>Stay Updated</h2>
-          <p>Subscribe to get notified about new projects, articles, and opportunities</p>
+    <section id="newsletter">
+      <div class="container">
+        <div class="newsletter-wrapper reveal">
+          <div class="newsletter-content">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to get notified about new projects, articles, and opportunities</p>
+          </div>
+          <form class="newsletter-form"
+            action="https://script.google.com/macros/s/AKfycbyHU0_LGDwVDpdkUOVRTt_GPvmiWHOLdn83sLBx7Is2_wI5iJopZCNmiEyMte1QlFTg/exec"
+            method="POST" onsubmit="handleNewsletterSubmit(event)">
+            <input type="email" name="email" id="newsletterEmail" placeholder="your@email.com" required
+              aria-label="Email address for newsletter" />
+            <button type="submit" class="btn-primary-custom">
+              <span>Subscribe</span>
+              <span>→</span>
+            </button>
+          </form>
         </div>
-        <form class="newsletter-form" action="https://script.google.com/macros/s/AKfycbyHU0_LGDwVDpdkUOVRTt_GPvmiWHOLdn83sLBx7Is2_wI5iJopZCNmiEyMte1QlFTg/exec" method="POST" onsubmit="handleNewsletterSubmit(event)">
-          <input type="email" name="email" id="newsletterEmail" placeholder="your@email.com" required aria-label="Email address for newsletter" />
-          <button type="submit" class="btn-primary-custom">
-            <span>Subscribe</span>
-            <span>→</span>
-          </button>
-        </form>
       </div>
-    </div>
-  </section>
+    </section>
   </main>
 
   <!-- 
@@ -787,4 +847,5 @@
   <!-- Core JavaScript Hook -->
   <script defer src="app.js"></script>
 </body>
+
 </html>
