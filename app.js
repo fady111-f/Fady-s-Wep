@@ -352,6 +352,7 @@ async function handleSubmit(e) {
       btn.style.pointerEvents = '';
       btn.style.minWidth = '';
       btn.style.minHeight = '';
+      if (typeof feather !== 'undefined') feather.replace();
     }, 3000);
   }
 }
@@ -988,6 +989,7 @@ async function handleNewsletterSubmit(e) {
       button.style.minHeight = '';
       input.style.opacity = '1';
       input.disabled = false;
+      if (typeof feather !== 'undefined') feather.replace();
     }, 3000);
   }
 }

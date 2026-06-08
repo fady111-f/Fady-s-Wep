@@ -1489,17 +1489,7 @@ section + section::before {
     align-items: center;
   }
 
-  /* Tactile compression feedback on tap */
-  .btn-primary-custom:active,
-  .btn-outline-custom:active,
-  .filter-btn:active,
-  .project-card:active,
-  .info-card:active,
-  .contact-link:active,
-  .skill-tag:active {
-    transform: scale(0.96) !important;
-    transition: transform 0.1s !important;
-  }
+  /* Tactile compression disabled to prevent pseudo-class sticking on form submissions */
 
   /* Disable expensive 3D visual translations on touch screens to protect CPU performance */
   .project-card:hover { transform: none; }
