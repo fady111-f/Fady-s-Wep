@@ -836,6 +836,29 @@
   <!-- Click Copy Clipboard Notification Popup -->
   <div class="copy-toast" id="copyToast">Copied to clipboard!</div>
 
+  <!-- 
+    ===========================================================================
+    DEVELOPER TERMINAL (EASTER EGG)
+    ===========================================================================
+  -->
+  <div id="devTerminal" class="dev-terminal hidden">
+    <div class="terminal-header">
+      <div class="terminal-buttons">
+        <span class="close-btn" id="termCloseBtn"></span>
+        <span class="min-btn"></span>
+        <span class="max-btn"></span>
+      </div>
+      <div class="terminal-title">fady@portfolio:~ (developer mode)</div>
+    </div>
+    <div class="terminal-body" id="termBody">
+      <div class="terminal-output" id="termOutput"></div>
+      <div class="terminal-input-line">
+        <span class="terminal-prompt">fady@portfolio:~$</span>
+        <input type="text" id="termInput" autocomplete="off" spellcheck="false" autofocus />
+      </div>
+    </div>
+  </div>
+
   <!-- Firebase App & Services SDK Compat (v10 CDN) -->
   <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>

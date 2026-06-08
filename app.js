@@ -412,69 +412,146 @@ magneticBtns.forEach(btn => {
   });
 });
 
-// ===== EASTER EGGS (CHEAT CODES) =====
-// Typing specific words on the keyboard triggers hidden modes.
+// ===== DEVELOPER TERMINAL (EASTER EGG) =====
 let typedSequence = '';
 window.addEventListener('keydown', (e) => {
-  // Only track alphabetical characters
-  if (e.key && e.key.length === 1 && e.key.match(/[a-zA-Z]/)) {
+  // Ignore typing if we are inside the terminal or an input
+  if (document.getElementById('devTerminal') && !document.getElementById('devTerminal').classList.contains('hidden')) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  if (e.key && e.key.length === 1 && e.key.match(/[a-zA-Z\\]/)) {
     typedSequence += e.key.toLowerCase();
+    if (typedSequence.length > 20) typedSequence = typedSequence.slice(-20);
     
-    // Keep only the last 20 characters to prevent memory buildup
-    if (typedSequence.length > 20) {
-      typedSequence = typedSequence.slice(-20);
+    if (typedSequence.endsWith('fady') || typedSequence.endsWith('terminal')) {
+      typedSequence = '';
+      openTerminal();
     }
-    
-    // Cheat Code 1: "fady"
-    if (typedSequence.endsWith('fady')) {
-      typedSequence = ''; // reset
-      activateFadyPower();
-    }
-    
-    // Cheat Code 2: "helloworld"
-    if (typedSequence.endsWith('helloworld')) {
-      typedSequence = ''; // reset
-      activateHelloWorld();
-    }
+  }
+  // Ctrl + \ also opens terminal
+  if (e.ctrlKey && e.key === '\\') {
+    e.preventDefault();
+    openTerminal();
   }
 });
 
-function activateFadyPower() {
-  if (typeof Swal !== 'undefined') {
-    Swal.fire({
-      title: 'FADY POWER ACTIVATED! ⚡',
-      text: 'You have found the secret creator mode.',
-      icon: 'success',
-      background: 'rgba(10, 15, 28, 0.95)',
-      color: '#fff',
-      confirmButtonColor: '#6366F1',
-      backdrop: `
-        rgba(99, 102, 241, 0.3)
-        url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%236366F1' fill-opacity='0.05' fill-rule='evenodd'/%3E")
-        left top
-        repeat
-      `
-    });
-  }
-  
-  // Crazy Visual Effect
-  document.body.style.transition = 'filter 0.5s';
-  document.body.style.filter = 'hue-rotate(90deg) contrast(1.2)';
-  setTimeout(() => {
-    document.body.style.filter = '';
-  }, 5000);
+const terminal = document.getElementById('devTerminal');
+const termInput = document.getElementById('termInput');
+const termOutput = document.getElementById('termOutput');
+const termCloseBtn = document.getElementById('termCloseBtn');
+
+function openTerminal() {
+  if (!terminal) return;
+  terminal.classList.remove('hidden');
+  termInput.focus();
+  termOutput.innerHTML = '';
+  typeTerminalText("Welcome to Fady OS v1.0.0\nType 'help' to see available commands.", 0, () => {
+    termInput.focus();
+  });
 }
 
-function activateHelloWorld() {
-  if (typeof Swal !== 'undefined') {
-    Swal.fire({
-      title: 'HELLO WORLD! 🌍',
-      text: 'Welcome to the Matrix.',
-      icon: 'info',
-      background: 'rgba(10, 15, 28, 0.95)',
-      color: '#10b981',
-      confirmButtonColor: '#10b981'
-    });
+function closeTerminal() {
+  if (!terminal) return;
+  terminal.classList.add('hidden');
+}
+
+if (termCloseBtn) {
+  termCloseBtn.addEventListener('click', closeTerminal);
+}
+
+if (termInput) {
+  termInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const command = termInput.value.trim().toLowerCase();
+      termInput.value = '';
+      
+      // Append user command to history
+      const historyLine = document.createElement('div');
+      historyLine.innerHTML = `<span class="terminal-prompt">fady@portfolio:~$</span> ${command}`;
+      termOutput.appendChild(historyLine);
+      
+      processCommand(command);
+    }
+  });
+  
+  // Keep focus on input when clicking inside terminal
+  terminal.addEventListener('click', () => {
+    termInput.focus();
+  });
+}
+
+function processCommand(cmd) {
+  if (!cmd) return;
+  
+  let response = "";
+  switch(cmd) {
+    case 'help':
+      response = "Available commands:\n- whoami   : Display biography\n- skills   : List technical skills\n- projects : View latest projects\n- clear    : Clear terminal screen\n- hire     : Contact for opportunities\n- exit     : Close the terminal";
+      break;
+    case 'whoami':
+      response = "Fady Fawzy\nComputer Engineering Student @ Cairo University.\nPassionate about Embedded Systems, AI, and Web Development.";
+      break;
+    case 'skills':
+      response = "Languages: C/C++, Python, JavaScript/TypeScript, ARM Assembly\nEmbedded : STM32, Arduino, FreeRTOS, Proteus, Altium\nWeb      : HTML, CSS, React, Node.js, Firebase\nAI       : Machine Learning, Data Science";
+      break;
+    case 'projects':
+      response = "Fetching projects from database...\n[1] Innovative Lampshade (Hardware/Design)\n[2] Restaurant Management System (C++)\n[3] Smart Nurse Robot (STM32, ARM Assembly)\n(Type 'exit' to view full details on the main site!)";
+      break;
+    case 'hire':
+      response = "Initiating contact protocol... Redirecting you to my email!";
+      setTimeout(() => {
+        window.location.href = "mailto:fady.fawzy2006@gmail.com";
+      }, 2000);
+      break;
+    case 'clear':
+      termOutput.innerHTML = '';
+      return;
+    case 'exit':
+      closeTerminal();
+      return;
+    default:
+      if (cmd.startsWith('sudo')) {
+        response = "Nice try, but I have backups! 😉";
+      } else {
+        response = `Command not found: ${cmd}. Type 'help' for a list of commands.`;
+      }
+  }
+  
+  typeTerminalText(response, 0, () => {
+    // scroll to bottom
+    const termBody = document.getElementById('termBody');
+    if (termBody) termBody.scrollTop = termBody.scrollHeight;
+  });
+}
+
+function typeTerminalText(text, index, callback) {
+  if (index === 0) {
+    const newLine = document.createElement('div');
+    newLine.className = 'term-bot-line';
+    termOutput.appendChild(newLine);
+  }
+  
+  const lines = document.querySelectorAll('.term-bot-line');
+  const currentLine = lines[lines.length - 1];
+  
+  if (index < text.length) {
+    if (text.charAt(index) === '\n') {
+      currentLine.innerHTML += '<br/>';
+    } else if (text.charAt(index) === ' ') {
+      currentLine.innerHTML += '&nbsp;';
+    } else {
+      currentLine.innerHTML += text.charAt(index);
+    }
+    
+    // Auto-scroll while typing
+    const termBody = document.getElementById('termBody');
+    if (termBody) termBody.scrollTop = termBody.scrollHeight;
+    
+    setTimeout(() => {
+      typeTerminalText(text, index + 1, callback);
+    }, 15); // Fast typing speed
+  } else {
+    if (callback) callback();
   }
 }
 
