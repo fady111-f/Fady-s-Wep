@@ -382,7 +382,25 @@ function initProjectCardsTilt() {
 initProjectCardsTilt();
 
 // ===== MAGNETIC EFFECT ON BUTTONS =====
-// Fully removed to optimize performance and battery life.
+// Creates a 'magnetic pull' feel on primary actions when mouse approaches inside.
+// Only enabled on non-touch devices (desktops/laptops).
+const magneticBtns = document.querySelectorAll('.btn-primary-custom, .btn-outline-custom');
+
+if (!isTouchDevice()) {
+  magneticBtns.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      btn.style.transform = `translate(${x * 0.14}px, ${y * 0.14}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+}
 
 // ===== DEVELOPER TERMINAL (EASTER EGG) =====
 let typedSequence = '';
