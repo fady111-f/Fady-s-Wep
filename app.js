@@ -400,26 +400,27 @@ function initProjectCardsTilt() {
 initProjectCardsTilt();
 
 // ===== MAGNETIC EFFECT ON BUTTONS =====
+// DISABLED: Magnetic pull effect has been disabled to keep buttons fixed in place.
 // Creates a 'magnetic pull' feel on primary actions when mouse approaches inside.
 // Math details:
 // - Calculate mouse offset vector from button's exact center.
 // - Scale displacement by 0.14 (pull target by 14% of absolute cursor distance).
 // - Exiting mouse resets the displacement smoothly.
-const magneticBtns = document.querySelectorAll('.btn-primary-custom, .btn-outline-custom');
-
-magneticBtns.forEach(btn => {
-  btn.addEventListener('mousemove', (e) => {
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-
-    btn.style.transform = `translate(${x * 0.14}px, ${y * 0.14}px)`;
-  });
-
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = '';
-  });
-});
+// const magneticBtns = document.querySelectorAll('.btn-primary-custom, .btn-outline-custom');
+//
+// magneticBtns.forEach(btn => {
+//   btn.addEventListener('mousemove', (e) => {
+//     const rect = btn.getBoundingClientRect();
+//     const x = e.clientX - rect.left - rect.width / 2;
+//     const y = e.clientY - rect.top - rect.height / 2;
+//
+//     btn.style.transform = `translate(${x * 0.14}px, ${y * 0.14}px)`;
+//   });
+//
+//   btn.addEventListener('mouseleave', () => {
+//     btn.style.transform = '';
+//   });
+// });
 
 // ===== TYPING EFFECT ON HERO TITLE =====
 // Cyclic typewriter animation for descriptive headings under the main hero.
