@@ -412,55 +412,70 @@ magneticBtns.forEach(btn => {
   });
 });
 
-// ===== HACKER TEXT EFFECT ON HERO NAME =====
-// Typing effect that writes ">_ HELLO WORLD" then scrambles into "Fady Fawzy"
-const heroNameEl = document.querySelector('.hero-name');
-if (heroNameEl) {
-  const finalName = heroNameEl.getAttribute('data-text') || "Fady Fawzy";
-  const startText = ">_ HELLO WORLD";
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-  
-  // Hide text initially so it's empty when page loads
-  heroNameEl.style.opacity = '0';
-  heroNameEl.innerText = "";
-  
-  // Wait for the preloader to finish its animation
-  window.addEventListener('preloaderFinished', () => {
-    heroNameEl.style.opacity = '1';
+// ===== EASTER EGGS (CHEAT CODES) =====
+// Typing specific words on the keyboard triggers hidden modes.
+let typedSequence = '';
+window.addEventListener('keydown', (e) => {
+  // Only track alphabetical characters
+  if (e.key && e.key.length === 1 && e.key.match(/[a-zA-Z]/)) {
+    typedSequence += e.key.toLowerCase();
     
-    // 500ms delay before typing starts
-    setTimeout(() => {
-      let typeIndex = 0;
-      // 1. Type ">_ HELLO WORLD"
-      const typeInterval = setInterval(() => {
-        heroNameEl.innerText = startText.substring(0, typeIndex + 1);
-        typeIndex++;
-        if (typeIndex >= startText.length) {
-          clearInterval(typeInterval);
-          
-          // 2. Pause, then scramble to final name
-          setTimeout(() => {
-            let iteration = 0;
-            const scrambleInterval = setInterval(() => {
-              heroNameEl.innerText = finalName
-                .split("")
-                .map((letter, index) => {
-                  if (index < iteration) return finalName[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              
-              if (iteration >= finalName.length) {
-                clearInterval(scrambleInterval);
-              }
-              // The lower the increment, the more scrambling frames before locking a letter
-              iteration += 1 / 3;
-            }, 35);
-          }, 1000); // 1-second pause after HELLO WORLD
-        }
-      }, 100); // 100ms per keystroke
-    }, 500);
-  });
+    // Keep only the last 20 characters to prevent memory buildup
+    if (typedSequence.length > 20) {
+      typedSequence = typedSequence.slice(-20);
+    }
+    
+    // Cheat Code 1: "fady"
+    if (typedSequence.endsWith('fady')) {
+      typedSequence = ''; // reset
+      activateFadyPower();
+    }
+    
+    // Cheat Code 2: "helloworld"
+    if (typedSequence.endsWith('helloworld')) {
+      typedSequence = ''; // reset
+      activateHelloWorld();
+    }
+  }
+});
+
+function activateFadyPower() {
+  if (typeof Swal !== 'undefined') {
+    Swal.fire({
+      title: 'FADY POWER ACTIVATED! ⚡',
+      text: 'You have found the secret creator mode.',
+      icon: 'success',
+      background: 'rgba(10, 15, 28, 0.95)',
+      color: '#fff',
+      confirmButtonColor: '#6366F1',
+      backdrop: `
+        rgba(99, 102, 241, 0.3)
+        url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%236366F1' fill-opacity='0.05' fill-rule='evenodd'/%3E")
+        left top
+        repeat
+      `
+    });
+  }
+  
+  // Crazy Visual Effect
+  document.body.style.transition = 'filter 0.5s';
+  document.body.style.filter = 'hue-rotate(90deg) contrast(1.2)';
+  setTimeout(() => {
+    document.body.style.filter = '';
+  }, 5000);
+}
+
+function activateHelloWorld() {
+  if (typeof Swal !== 'undefined') {
+    Swal.fire({
+      title: 'HELLO WORLD! 🌍',
+      text: 'Welcome to the Matrix.',
+      icon: 'info',
+      background: 'rgba(10, 15, 28, 0.95)',
+      color: '#10b981',
+      confirmButtonColor: '#10b981'
+    });
+  }
 }
 
 // ===== TYPING EFFECT ON HERO TITLE =====
