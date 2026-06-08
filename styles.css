@@ -460,10 +460,12 @@ body.light-theme .nav-links {
   line-height: 1;
 }
 
-.theme-toggle:hover {
-  background: var(--bg-glass);
-  border-color: var(--border-accent);
-  transform: rotate(20deg) scale(1.12); /* Spin/pop effect */
+@media (hover: hover) {
+  .theme-toggle:hover {
+    background: var(--bg-glass);
+    border-color: var(--border-accent);
+    transform: rotate(20deg) scale(1.12); /* Spin/pop effect */
+  }
 }
 
 /* Mobile Hamburger Toggle (hidden by default on widescreen monitors) */
@@ -475,6 +477,7 @@ body.light-theme .nav-links {
   padding: 10px;
   z-index: 1001;
   border-radius: var(--radius-sm);
+  gap: 5px; /* Use flex gap instead of margins for Safari */
 }
 
 .nav-toggle span {
@@ -482,9 +485,9 @@ body.light-theme .nav-links {
   width: 22px;
   height: 2px;
   background: var(--text-primary);
-  margin: 5px 0;
   transition: all 0.3s var(--ease-smooth);
   border-radius: 2px;
+  flex-shrink: 0; /* Prevent collapsing on Safari */
 }
 
 /* ===== CONTAINER ===== */
