@@ -22,7 +22,7 @@
 // If config is left empty or is incomplete, the system triggers 'Resiliency Fallback',
 // rendering hardcoded static content seamlessly so there is 0% downtime!
 const firebaseConfig = {
-  apiKey: "AIzaSyBVsH0PHmIh_jJQR71UHy0iFvDRNso017k",
+  apiKey: "AIzaSyBVsh0PHmIh_jJQR71UhY0iFvDRNsoO17k",
   authDomain: "fady-portfolio-d955b.firebaseapp.com",
   projectId: "fady-portfolio-d955b",
   storageBucket: "fady-portfolio-d955b.firebasestorage.app",
