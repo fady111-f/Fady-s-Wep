@@ -1103,11 +1103,15 @@ async function syncPortfolioData() {
         const repoLinkHTML = project.repoLink ? `<div class="project-links"><a href="${project.repoLink}" target="_blank">View Repository →</a></div>` : "";
         const tagsHTML = (project.tags || []).map(tag => `<span class="project-tag">${tag}</span>`).join('');
 
+        const iconValue = project.icon || 'cpu';
+        const isFeather = /^[a-z0-9-]+$/i.test(iconValue);
+        const iconHTML = isFeather ? `<i data-feather="${iconValue}"></i>` : iconValue;
+
         projectsHTML += `
           <div class="project-card reveal ${delayClass} visible" data-category="${project.category}">
             <div class="card-light"></div>
             <div class="project-header">
-              <span class="project-icon">${project.icon || '💻'}</span>
+              <span class="project-icon">${iconHTML}</span>
               <span class="project-year">${project.year}</span>
             </div>
             <h3 class="project-title">${project.title}</h3>
@@ -1125,6 +1129,8 @@ async function syncPortfolioData() {
       initProjectCardsTilt();
       // Re-initialize custom cursor hover listeners for dynamic project cards!
       initCustomCursorHoverListeners();
+      // Render the feather icons
+      if (typeof feather !== 'undefined') feather.replace();
     }
   } catch (error) {
     console.warn("Error fetching dynamic data from Firebase, maintaining static fallback: ", error);
