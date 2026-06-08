@@ -75,20 +75,27 @@ function escapeHTML(str) {
 // Applies a 400ms buffer to ensure initial page paints, assets, and local variables
 // are loaded, then slides/fades the loader via CSS opacity.
 // Removes the loader element from the DOM after 700ms transition time to save memory.
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
   if (typeof feather !== 'undefined') feather.replace();
+  
+  // Wait for Firebase data to load FIRST (with a maximum timeout of 3 seconds)
+  // This prevents the "flicker" effect where old HTML data is visible before Firebase injects new data.
+  try {
+    await Promise.race([
+      syncPortfolioData(),
+      new Promise(resolve => setTimeout(resolve, 3000))
+    ]);
+  } catch (e) {
+    console.error("Firebase sync timeout or error:", e);
+  }
+
+  // Dismiss the loader ONLY after data is fetched and injected
   const loader = document.getElementById('pageLoader');
   if (loader) {
+    loader.classList.add('loaded');
     setTimeout(() => {
-      loader.classList.add('loaded');
-      setTimeout(() => {
-        loader.remove();
-        // Sync custom database items after preloader finishes
-        syncPortfolioData();
-      }, 700);
-    }, 400);
-  } else {
-    syncPortfolioData();
+      loader.remove();
+    }, 700);
   }
 });
 
