@@ -561,16 +561,126 @@ function typeTerminalText(text, index, callback) {
 }
 
 function activateHelloWorld() {
-  if (typeof Swal !== 'undefined') {
-    Swal.fire({
-      title: 'HELLO WORLD! 🌍',
-      text: 'Welcome to the Matrix.',
-      icon: 'info',
-      background: 'rgba(10, 15, 28, 0.95)',
-      color: '#10b981',
-      confirmButtonColor: '#10b981'
-    });
-  }
+  const overlay = document.createElement('div');
+  overlay.id = "helloWorldOverlay";
+  overlay.innerHTML = `
+    <div class="hw-matrix-bg"></div>
+    <div class="hw-content">
+      <div class="hw-code-snippets"></div>
+      <h1 class="hw-title">HELLO WORLD</h1>
+      <p class="hw-subtitle">The sentence that started it all.</p>
+      <button class="hw-close">Return to Reality</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  // Add massive CSS for the overlay dynamically
+  const style = document.createElement('style');
+  style.id = "hwStyle";
+  style.innerHTML = `
+    #helloWorldOverlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #050505; z-index: 999999;
+      display: flex; justify-content: center; align-items: center;
+      flex-direction: column; overflow: hidden;
+      animation: hwFadeIn 1.5s forwards;
+    }
+    .hw-matrix-bg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0, rgba(0,255,0,0.03) 1px, transparent 1px, transparent 2px);
+      pointer-events: none;
+    }
+    .hw-content {
+      position: relative; z-index: 2; text-align: center; width: 100%;
+    }
+    .hw-title {
+      font-size: clamp(3rem, 10vw, 8rem); color: #10b981; font-family: 'JetBrains Mono', monospace;
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.5), 0 0 40px rgba(16, 185, 129, 0.3);
+      margin: 0; animation: hwGlitch 3s infinite;
+    }
+    .hw-subtitle {
+      font-size: clamp(1rem, 3vw, 1.5rem); color: #fff; letter-spacing: 5px; text-transform: uppercase;
+      margin-top: 15px; opacity: 0; animation: hwFadeInUp 2s 1.5s forwards;
+    }
+    .hw-close {
+      margin-top: 50px; padding: 15px 35px; font-size: 1.1rem;
+      background: transparent; color: #10b981; border: 2px solid #10b981;
+      cursor: pointer; opacity: 0; animation: hwFadeInUp 2s 2.5s forwards;
+      transition: all 0.3s; font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .hw-close:hover { background: #10b981; color: #000; box-shadow: 0 0 25px #10b981; }
+    
+    .hw-code-snippets {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 100vw; height: 100vh; pointer-events: none; z-index: -1;
+    }
+    .hw-snippet {
+      position: absolute; color: rgba(16, 185, 129, 0.3); font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.8rem, 2vw, 1.4rem); white-space: pre; opacity: 0;
+      animation: hwFlash 4s forwards; font-weight: 600;
+    }
+
+    @keyframes hwFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes hwFadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes hwFlash { 0% { opacity: 0; transform: scale(0.8); } 5% { opacity: 1; transform: scale(1.2); } 10% { transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: scale(0.9); } }
+    @keyframes hwGlitch {
+      0%, 100% { text-shadow: 0 0 20px rgba(16,185,129,0.5), 0 0 40px rgba(16,185,129,0.3); transform: translate(0); }
+      92% { text-shadow: 0 0 20px rgba(16,185,129,0.5), 0 0 40px rgba(16,185,129,0.3); transform: translate(0); }
+      93% { text-shadow: 4px 0 0 #ff003c, -4px 0 0 #00e6f6; transform: translate(-2px, 2px); }
+      95% { text-shadow: -4px 0 0 #ff003c, 4px 0 0 #00e6f6; transform: translate(2px, -2px); }
+      97% { text-shadow: 0 0 20px rgba(16,185,129,0.5); transform: translate(0); }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Programming languages snippets logic
+  const snippets = [
+    `printf("Hello, World!\\n");`,
+    `print("Hello, World!")`,
+    `std::cout << "Hello, World!" << std::endl;`,
+    `console.log("Hello, World!");`,
+    `System.out.println("Hello, World!");`,
+    `echo "Hello, World!"`,
+    `fmt.Println("Hello, World!")`,
+    `mov ah, 09h\\nmov dx, offset msg\\nint 21h`,
+    `++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.`,
+    `DISPLAY 'HELLO WORLD'.`,
+    `<?php echo "Hello, World!"; ?>`,
+    `putStrLn "Hello, World!"`
+  ];
+
+  const snippetsContainer = overlay.querySelector('.hw-code-snippets');
+  let snippetCount = 0;
+  
+  const snippetInterval = setInterval(() => {
+    if (snippetCount > 25) {
+      clearInterval(snippetInterval);
+      return;
+    }
+    const snippet = document.createElement('div');
+    snippet.className = 'hw-snippet';
+    snippet.innerText = snippets[Math.floor(Math.random() * snippets.length)];
+    // Random position within safe bounds
+    snippet.style.top = Math.random() * 80 + 10 + '%';
+    snippet.style.left = Math.random() * 80 + 10 + '%';
+    snippetsContainer.appendChild(snippet);
+    snippetCount++;
+    
+    // Auto remove snippet from DOM after animation
+    setTimeout(() => { snippet.remove(); }, 4000);
+  }, 250); // spawn a new snippet every 250ms
+
+  // Close logic
+  overlay.querySelector('.hw-close').addEventListener('click', () => {
+    overlay.style.transition = 'opacity 0.8s ease';
+    overlay.style.opacity = '0';
+    clearInterval(snippetInterval);
+    setTimeout(() => {
+      overlay.remove();
+      style.remove();
+    }, 800);
+  });
 }
 
 // ===== TYPING EFFECT ON HERO TITLE =====
